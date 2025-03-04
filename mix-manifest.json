@@ -1,0 +1,9 @@
+{
+    "/assets/dist/js/app.js": "/assets/dist/js/app.js",
+    "/assets/dist/css/app.css": "/assets/dist/css/app.css",
+    "/assets/dist/js/plugins/jquery.maskedinput.min.js": "/assets/dist/js/plugins/jquery.maskedinput.min.js",
+    "/assets/dist/fonts/NotoSansMono/NotoSansMono-Bold.ttf": "/assets/dist/fonts/NotoSansMono/NotoSansMono-Bold.ttf",
+    "/assets/dist/fonts/NotoSansMono/NotoSansMono-Medium.ttf": "/assets/dist/fonts/NotoSansMono/NotoSansMono-Medium.ttf",
+    "/assets/dist/fonts/NotoSansMono/NotoSansMono-Regular.ttf": "/assets/dist/fonts/NotoSansMono/NotoSansMono-Regular.ttf",
+    "/assets/dist/fonts/Steinbeck/SteinbeckReg.ttf": "/assets/dist/fonts/Steinbeck/SteinbeckReg.ttf"
+}

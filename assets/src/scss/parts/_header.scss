@@ -1,0 +1,12 @@
+.menu-item, li.page_item{
+  @apply inline-block xs:mr-12 xs:mb-0 mb-4 leading-none lowercase hover:underline underline-offset-4;
+  &:last-child{
+    @apply mb-0 ;
+  }
+}
+.mobile-menu{
+  @apply justify-end;
+  .menu-item{
+    @apply mr-0 ml-10 mb-0 text-xl leading-none;
+  }
+}

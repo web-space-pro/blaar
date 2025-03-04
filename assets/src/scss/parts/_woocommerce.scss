@@ -1,0 +1,92 @@
+li.product{
+ .product-image{
+  img{
+   @apply absolute h-full w-full inset-0 object-cover object-center transition-all ease-in-out duration-500 bg-[#F6F6F6];
+  }
+   &:hover{
+    img{
+      @apply scale-110;
+    }
+   }
+ }
+ a.add_to_cart_button{
+  @apply text-xs font-sans bg-transparent border border-solid transition-all ease-in-out border-black py-1 px-3 font-normal text-black hover:bg-black hover:text-white-10;
+  &.added{
+   &:after{
+    content: none!important;
+   }
+  }
+  &.loading{
+   &:after{
+    top: 5px!important;
+   }
+  }
+ }
+ .loop_content{
+  &:hover{
+   .loop_add_to_cart{
+
+   }
+  }
+ }
+ .added_to_cart{
+  @apply hidden;
+ }
+ .price{
+  ins{
+   text-decoration: none;
+  }
+  del{
+   @apply text-xs;
+  }
+ }
+}
+
+
+.quantity-wrapper {
+ align-items: center;
+ gap: 5px;
+ &.hidden-quantity{
+  opacity: 0;
+  height: 0;
+  visibility: hidden;
+ }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+ -webkit-appearance: none;
+ margin: 0;
+}
+
+/* Убираем стрелки в Firefox */
+input[type="number"] {
+ -moz-appearance: textfield;
+ text-align: center;
+}
+.qty {
+ width: 25px;
+ background: transparent;
+ text-align: center;
+}
+
+.qty-minus,
+.qty-plus {
+ user-select: none;
+ -webkit-user-select: none;
+ -moz-user-select: none;
+ -ms-user-select: none;
+ background: transparent;
+ border: 1px solid black!important;
+ border: none;
+ width: 28px;
+ height: 28px;
+ cursor: pointer;
+ font-size: 14px;
+ line-height: 1;
+ display: flex;
+ align-items: center;
+ svg{
+  margin: 0 auto;
+ }
+}

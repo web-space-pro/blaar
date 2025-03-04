@@ -1,0 +1,132 @@
+
+ form, .woocommerce form{
+  input[type="text"],
+  input[type="email"],
+  input[type="url"],
+  input[type="password"],
+  input[type="search"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="range"],
+  input[type="date"],
+  input[type="month"],
+  input[type="week"],
+  input[type="time"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="color"],
+  textarea {
+    @apply px-0.5 py-3 border-b border-gray-10 text-base w-full text-gray-10 inline-block font-sans bg-transparent focus:bg-transparent;
+  }
+  textarea{
+    @apply h-24 resize-none;
+  }
+  input::placeholder {
+    @apply text-base text-gray-20 font-sans;
+  }
+
+  input:-webkit-autofill {
+    background-color: transparent !important;
+  }
+  button.button,
+  .woocommerce-Button.button,
+  button,
+  input[type="button"],
+  input[type="submit"] {
+    @apply w-full cursor-pointer px-5 py-2 border border-black bg-black text-white-10  inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500;
+  }
+
+  //button:active,
+  //button:focus,
+  button.button:hover,
+  .woocommerce-Button.button:hover,
+  button:hover,
+  input[type="button"]:hover,
+  input[type="button"]:active,
+  input[type="button"]:focus,
+  input[type="submit"]:active,
+  input[type="submit"]:hover,
+  //input[type="submit"]:focus
+   {
+    @apply bg-transparent text-black;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="number"]:focus,
+  input[type="tel"]:focus,
+  input[type="range"]:focus,
+  input[type="date"]:focus,
+  input[type="month"]:focus,
+  input[type="week"]:focus,
+  input[type="time"]:focus,
+  input[type="datetime"]:focus,
+  input[type="datetime-local"]:focus,
+  input[type="color"]:focus,
+  textarea:focus {
+    outline: none;
+    @apply border-black;
+  }
+}
+
+form{
+  @apply text-sm text-gray-20;
+  label{
+    @apply mb-6 block;
+  }
+  a{
+    @apply underline underline-offset-2 hover:no-underline;
+  }
+  input[type="checkbox"]{
+    display: none;
+  }
+  .wpcf7-acceptance{
+    @apply mt-4 block;
+    .wpcf7-list-item{
+      @apply ml-0;
+    }
+  }
+  .wpcf7-spinner{
+    @apply hidden w-0 h-0;
+  }
+  .wpcf7-not-valid-tip{
+    @apply text-xs pl-2.5 mt-2;
+  }
+  .wpcf7-response-output{
+    @apply text-sm text-gray-500 !m-0 !border-none !p-2.5;
+  }
+}
+
+
+ .woocommerce{
+   form{
+     .form-row{
+       @apply p-0 m-0 mb-6;
+     }
+     input{
+       @apply lowercase;
+     }
+     #order_comments {
+       @apply h-24 resize-none pt-3 align-top lowercase;
+     }
+   }
+ }
+
+ .woocommerce-checkout{
+   .woocommerce-NoticeGroup,
+   .woocommerce-NoticeGroup-checkout {
+     display: none !important;
+   }
+   #woocommerce-checkout {
+     opacity: 1 !important;
+   }
+   .blockUI.blockOverlay {
+     display: none !important;
+   }
+ }
+ .woocommerce form .form-row.woocommerce-validated .select2-container, .woocommerce form .form-row.woocommerce-validated input.input-text, .woocommerce form .form-row.woocommerce-validated select {
+   @apply border-black;
+ }
