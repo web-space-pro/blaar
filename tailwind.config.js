@@ -44,8 +44,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'reg': ['Steinbeck','sans-serif'],
-        'sans': ['NotoSansMono','sans-serif'],
+        'relaway': ['Raleway','sans-serif'],
+        'oswald': ['Oswald','sans-serif'],
       },
       container: {
         center: true,
@@ -71,13 +71,27 @@ module.exports = {
       },
       colors: {
         white: {
-          10: '#f2f2f0',
-          20: '#d9d9d9',
+          10: '#ffffff',
+          20: '#f1f1f1',
+          30: '#f5f5f5',
+          40: '#ebedf2',
+          50: '#e6e6e6',
         },
         gray:{
-          10: '#3f4042',
-          20: '#afafaf',
+          10: '#dddddd',
+          20: '#cccccc',
+          30: '#bbbbbb',
+          40: '#adafb2',
+          50: '#999999',
+          60: '#777777',
+          70: '#616266',
+
         },
+        black: {
+          10: '#222222',
+          20: '#242833',
+          30: '#525766'
+        }
       },
       boxShadow: {
         'icon': '0 0 5px #cca670',

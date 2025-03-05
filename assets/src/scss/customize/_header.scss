@@ -1,0 +1,6 @@
+.menu-item, li.page_item{
+  @apply uppercase inline-block font-relaway font-semibold text-xs tracking-wide sm:mr-6;
+  &:last-child{
+    @apply mr-0;
+  }
+}

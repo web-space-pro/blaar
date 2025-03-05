@@ -1,9 +1,7 @@
 (function ($, root, undefined) {
     $(document).ready(function(){
-        $('#nav-icon').click(function(){
-            $(this).toggleClass('open');
-            $('.tcontainer').toggleClass('open');
-
+        $('.btn-burger').click(function(e){
+            $('.btn-burger, .mobile-menu').toggleClass('toggled');
         });
     });
 })(jQuery);
