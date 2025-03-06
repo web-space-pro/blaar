@@ -54,7 +54,7 @@
                 <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide sm:mr-6" href="<?php echo wc_get_cart_url(); ?>" target="_self">
                     Корзина (<span class="align-middle" id="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
                 </a>
-                <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" target="_self">
+                <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="/" target="_self">
                     избранное (0)
                 </a>
             </div>

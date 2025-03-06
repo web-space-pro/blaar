@@ -18,8 +18,5 @@ require 'inc/functions-ajax.php';
 require 'inc/functions-common.php';
 require 'inc/functions-template.php';
 //require 'inc/functions-acf.php';
-//
-//require 'inc/woocommerce/woocommerce-cart.php';
-//require 'inc/woocommerce/woocommerce-archive.php';
-//require 'inc/woocommerce/woocommerce-single-product.php';
-//require 'inc/woocommerce/woocommerce-checkout.php';
+
+require 'inc/woocommerce/woocommerce.php';
