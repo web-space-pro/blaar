@@ -13,3 +13,15 @@ function blaar_get_cart_count() {
     }
     wp_die();
 }
+
+
+add_filter( 'woocommerce_add_to_cart_fragments', function( $fragments ) {
+    ob_start();
+    ?>
+    <span class="align-middle" id="cart-total">
+        <?php echo WC()->cart->get_cart_contents_count(); ?>
+    </span>
+    <?php
+    $fragments['#cart-count'] = ob_get_clean();
+    return $fragments;
+});

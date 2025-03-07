@@ -1,90 +1,106 @@
 <?php
 
 if ( ! current_user_can( 'manage_options' ) ) {
-    show_admin_bar( false );
+//    show_admin_bar( false );
 }
 
 add_action( 'after_setup_theme', 'blaar_theme_setup' );
 function blaar_theme_setup() {
     /*
-        * Make theme available for translation.
-        * Translations can be filed in the /languages/ directory.
-        * If you're building a theme based on custom-theme, use a find and replace
-        * to change 'custom-theme' to the name of your theme in all the template files.
-        */
+        * Делаем тему доступной для перевода.
+        * Файлы переводов должны находиться в папке /languages/.
+        * Если используешь другую тему, замени 'blaar-theme' на её имя.
+    */
     load_theme_textdomain( 'blaar-theme', get_template_directory() . '/languages' );
 
-    // Add default posts and comments RSS feed links to head.
+    // Добавляет ссылки на RSS-ленты для записей и комментариев в `<head>`
     add_theme_support( 'automatic-feed-links' );
+
+    // Позволяет WordPress управлять заголовком страницы
     add_theme_support( 'title-tag' );
 
-    //Add Thumbnail Theme support
+    // Включает поддержку миниатюр (изображений записей)
     add_theme_support( 'post-thumbnails' );
 
-    // Add support for block styles.
-   // add_theme_support( 'wp-block-styles' );
+    // Включает поддержку отложенной загрузки изображений (Lazy Load)
+    add_theme_support('lazy-load');
+
+    // Включает поддержку WooCommerce блоков в редакторе Gutenberg
+    add_theme_support('wc-blocks');
+
 
     /*
-        * Switch default core markup for search form, comment form, and comments
-        * to output valid HTML5.
+        * Включает поддержку HTML5 для некоторых элементов,
+        * что делает разметку более современной и семантической.
     */
     add_theme_support(
         'html5',
         array(
-            'search-form',
-            'comment-form',
-            'comment-list',
-            'gallery',
-            'caption',
-            'style',
-            'script',
+            'search-form',     // Форма поиска
+            'comment-form',    // Форма комментариев
+            'comment-list',    // Список комментариев
+            'gallery',         // Галереи изображений
+            'caption',         // Подписи к изображениям
+            'style',           // Подключение стилей через `wp_enqueue_style()`
+            'script',          // Подключение скриптов через `wp_enqueue_script()`
         )
     );
 
-
-    // Add theme support for selective refresh for widgets.
-    //add_theme_support( 'customize-selective-refresh-widgets' );
+    // Позволяет обновлять виджеты без перезагрузки в настройках кастомайзера
+    add_theme_support( 'customize-selective-refresh-widgets' );
 
     /**
-     * Add support for core custom logo
+     * Включает поддержку кастомного логотипа
      */
     add_theme_support(
         'custom-logo',
         array(
-            'height'      => 250,
-            'width'       => 250,
-            'flex-width'  => true,
-            'flex-height' => true,
+            'height'      => 250,  // Высота логотипа
+            'width'       => 250,  // Ширина логотипа
+            'flex-width'  => true, // Позволяет изменять ширину
+            'flex-height' => true, // Позволяет изменять высоту
         )
     );
-}
 
-if ( function_exists('add_theme_support') ) {
-
-	// Add Menu Support
+    // Включает поддержку меню в теме
     add_theme_support('menus');
 
-    // Add Woocomerse Support
-    add_theme_support( 'woocommerce' );
+    // Включает поддержку  виджетов в теме
+//    add_theme_support('widgets');
 
-    // add_theme_support( 'wc-product-gallery-slider' );
 
-    //add_theme_support('automatic-feed-links');
-	add_theme_support( 'html5', array( 'search-form' ) );
-
-    // Add Thumbnail Theme Support
-    add_theme_support('post-thumbnails');
-    add_image_size('small', 300, '', true);
-    add_image_size('medium', 600, '', true);
-    add_image_size('large', 1000, '', true);
-    add_image_size('large2', 1400, '', true);
-    add_image_size('large3', 1920, '', true);
+    // Добавляет кастомные размеры изображений
+    add_image_size('small', 300, '', true);    // Маленькое изображение
+    add_image_size('medium', 600, '', true);   // Среднее изображение
+    add_image_size('large', 1000, '', true);   // Большое изображение
+    add_image_size('large2', 1400, '', true);  // Еще большее изображение
+    add_image_size('large3', 1920, '', true);  // Полноэкранное изображение
 }
+
+add_action('after_setup_theme', 'blaar_theme_setup');
+
 
 // Remove Wordpress emoji
 remove_action('wp_head', 'print_emoji_detection_script', 7);
 remove_action('admin_print_scripts', 'print_emoji_detection_script');
 remove_action('wp_print_styles', 'print_emoji_styles');
 remove_action('admin_print_styles', 'print_emoji_styles');
+
+
+
+// ------- для Gutenberg -----------------
+
+//Включает поддержку редактора стилей Gutenberg
+//    add_theme_support('editor-styles');
+//    add_editor_style('style-editor.css'); // Файл стилей для редактора
+// для стилей в админке и на сайте
+//    function blaar_enqueue_styles() {
+//        wp_enqueue_style('blaar-style', get_stylesheet_uri()); // Основной файл стилей
+//        wp_enqueue_style('blaar-editor-style', get_template_directory_uri() . '/style-editor.css'); // Файл редактора
+//    }
+//    add_action('wp_enqueue_scripts', 'blaar_enqueue_styles');
+
+
+// ------- для Gutenberg --------конец---------
 
 ?>

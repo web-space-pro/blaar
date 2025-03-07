@@ -28,8 +28,13 @@ module.exports = {
       'woocommerce/loop/price.php',
       'woocommerce/loop/loop-start.php',
       'woocommerce/loop/loop-end.php',
+
       'woocommerce/single-product/add-to-cart/simple.php',
+      'woocommerce/single-product/add-to-cart/variable.php',
+
+
       'woocommerce/cart/cart.php',
+      'woocommerce/cart/mini-cart.php',
       'woocommerce/cart/cart-totals.php',
       'woocommerce/checkout/form-checkout.php',
       'woocommerce/checkout/payment.php',

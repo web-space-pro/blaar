@@ -51,9 +51,7 @@
         </div>
         <div class="xl:basis-5/12 flex justify-end">
             <div class="hidden xs:flex gap-4">
-                <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide sm:mr-6" href="<?php echo wc_get_cart_url(); ?>" target="_self">
-                    Корзина (<span class="align-middle" id="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
-                </a>
+                <?php the_widget( 'WC_Widget_Cart', 'title=' ); ?>
                 <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="/" target="_self">
                     избранное (0)
                 </a>
@@ -78,5 +76,6 @@
                 избранное (0)
             </a>
         </div>
+
     </div>
 </div>

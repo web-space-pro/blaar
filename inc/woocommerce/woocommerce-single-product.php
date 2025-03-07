@@ -1,10 +1,22 @@
 <?php
-remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10);
+// Убирает отображение метки "Скидка" над товаром
+//remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10);
+
+// Отключает блок "С этим товаром покупают" (Upsell товары)
 remove_action('woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15);
+
+// Отключает вывод связанных товаров (Related Products)
 remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
+
+// Убирает вкладки с дополнительной информацией (Описание, Характеристики, Отзывы и т. д.)
 remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
-remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
-remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
+
+// Убирает отображение галереи изображений товара
+//remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
+
+// Отключает блок с мета-данными товара (Категории, Метки, SKU)
+//remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
+
 
 //Вывод Комплектации перед характеристиками ( ACF )
 add_action('woocommerce_single_product_summary', 'blaar_display_product_equipment', 24);
@@ -13,7 +25,7 @@ add_action('woocommerce_single_product_summary', 'blaar_display_product_equipmen
 add_action('woocommerce_single_product_summary', 'blaar_display_product_attributes', 25);
 
 // Убирать стандартное описание
-remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
+//remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
 // Вывод описание перед кнопкой "В корзину"
 add_action('woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 29);
 //удалить кнопку из уведомления при добавлении товара в корзину
