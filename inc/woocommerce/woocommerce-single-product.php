@@ -1,4 +1,8 @@
 <?php
+// убрать возможность выбора количества на странице товара
+add_filter('woocommerce_is_sold_individually', 'blaar_hide_quantity_input_on_single_product', 10, 2);
+
+
 // Убирает отображение метки "Скидка" над товаром
 //remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10);
 
@@ -26,12 +30,17 @@ add_action('woocommerce_single_product_summary', 'blaar_display_product_attribut
 
 // Убирать стандартное описание
 //remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
-// Вывод описание перед кнопкой "В корзину"
+
+
+/// Вывод описание перед кнопкой "В корзину"
 add_action('woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 29);
+
 //удалить кнопку из уведомления при добавлении товара в корзину
 add_filter('wc_add_to_cart_message_html', function ($message, $products) {
     return preg_replace('/<a .*?class=".*?wc-forward.*?".*?>.*?<\/a>/', '', $message);
 }, 10, 2);
+
+
 add_filter('woocommerce_add_error', function ($error) {
     return wp_strip_all_tags($error);
 });
@@ -42,8 +51,8 @@ function blaar_display_product_attributes() {
     $attributes = $product->get_attributes();
 
     if (!empty($attributes)) {
-        echo '<div class="attributes pt-4  border-black">';
-        echo '<h3 class="font-sans text-base text-gray-20 mb-4">Характеристики</h3>';
+        echo '<div class="attributes pt-4 mb-6 border-black">';
+        echo '<h3 class="font-sans text-xl text-base  mb-4">Характеристики</h3>';
         echo '<table class="w-full font-sans">';
         echo '<tbody>';
 
@@ -92,5 +101,13 @@ function blaar_display_product_equipment() {
         echo '</div>'; // .custom-select
         echo '</div>';
     }
+}
+
+// Отключает выбор количества
+function blaar_hide_quantity_input_on_single_product($return, $product) {
+    if (is_product()) {
+        return true;
+    }
+    return $return;
 }
 

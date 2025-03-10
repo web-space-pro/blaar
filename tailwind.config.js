@@ -25,12 +25,14 @@ module.exports = {
 
       'woocommerce/archive-product.php',
       'woocommerce/content-product.php',
+      'woocommerce/content-single-product.php',
       'woocommerce/loop/price.php',
       'woocommerce/loop/loop-start.php',
       'woocommerce/loop/loop-end.php',
 
       'woocommerce/single-product/add-to-cart/simple.php',
       'woocommerce/single-product/add-to-cart/variable.php',
+      'woocommerce/single-product/title.php',
 
 
       'woocommerce/cart/cart.php',

@@ -137,3 +137,32 @@ span.price{
    }
   }
 }
+
+
+//Single peoduct
+
+.woocommerce-product-gallery{
+  @apply w-full;
+ .woocommerce-product-gallery__trigger{
+  @apply hidden;
+ }
+  a{
+   @apply w-full;
+  }
+  img{
+   @apply w-full h-full object-center object-center;
+  }
+}
+.reset_variations{
+ @apply hidden;
+}
+.cfvsw-swatches-container{
+ @apply mb-4;
+}
+
+.single_variation_wrap{
+ @apply text-3xl;
+ span.price{
+  @apply text-xl;
+ }
+}

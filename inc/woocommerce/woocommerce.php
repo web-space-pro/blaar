@@ -29,7 +29,7 @@ function blaar_dequeue_woocommerce_styles() {
 //        wp_dequeue_style('woocommerce-smallscreen'); // Стили для мобильных устройств
 //    }
 
-    if (!is_woocommerce() && !is_cart() && !is_checkout() && !is_account_page()) {
+    if (!is_cart() && !is_checkout() && !is_account_page()) {
         wp_dequeue_style('woocommerce-general');
         wp_dequeue_style('woocommerce-layout');
         wp_dequeue_style('woocommerce-smallscreen');
@@ -39,6 +39,7 @@ function blaar_dequeue_woocommerce_styles() {
 
 
 require 'woocommerce-ajax.php';
+require 'woocommerce-archive.php';
 require 'woocommerce-single-product.php';
 
 ?>
