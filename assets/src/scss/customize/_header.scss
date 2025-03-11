@@ -4,3 +4,26 @@
     @apply mr-0;
   }
 }
+
+.menu-mobile{
+  .menu-item, li.page_item{
+    @apply mb-4;
+    &:last-child{
+      @apply mb-0;
+    }
+  }
+}
+
+li.mobile-menu-item{
+  @apply block font-relaway font-normal text-xs tracking-wide mb-3;
+  &:last-child{
+    @apply mb-0;
+  }
+  a{
+    @apply font-normal;
+  }
+}
+
+.menu-title.active {
+  @apply text-black-10 border-b border-black-10;
+}

@@ -50,7 +50,12 @@
             </div>
         </div>
         <div class="xl:basis-5/12 flex justify-end">
-            <div class="hidden xs:flex gap-4">
+            <div class="hidden xs:flex items-center gap-4">
+                <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide"
+                   href="<?php echo is_user_logged_in() ? get_permalink(get_option('woocommerce_myaccount_page_id')) : wc_get_page_permalink('myaccount'); ?>"
+                   target="_self">
+                    <?php echo is_user_logged_in() ? 'Мой аккаунт' : 'Вход'; ?>
+                </a>
                 <?php the_widget( 'WC_Widget_Cart', 'title=' ); ?>
                 <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="/" target="_self">
                     избранное (0)
@@ -66,16 +71,134 @@
     </div>
 </header>
 
-<div class="mobile-menu fixed top-[56px] left-0 right-0 w-full bg-white-10 z-50 opacity-0 -translate-y-3 invisible">
-    <div class="test px-4 py-8">
-        <div class="flex flex-col gap-4 items-end">
-            <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="<?php echo wc_get_cart_url(); ?>" target="_self">
-                Корзина (<span class="align-middle" id="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
-            </a>
-            <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" target="_self">
-                избранное (0)
-            </a>
-        </div>
+<div class="sub-menu fixed top-[56px] left-0 right-0 w-full bg-white-10 z-50 opacity-0 -translate-y-3 invisible px-4 py-8">
+    <?php
+    $menu_name = 'header-menu';
+    $menu_items = wp_get_nav_menu_items($menu_name);
 
+    if ($menu_items):
+        foreach ($menu_items as $key => $item):
+            $menus = get_field('add_menus', $item);
+            $images = get_field('image_menu', $item);
+            $isSabMenu = get_field('is_sabmenu', $item);
+            if(!empty($menus) && $isSabMenu): ?>
+                <div data-menu-id="<?=$item->ID?>" class="h-0 opacity-0 -translate-y-3 invisible flex custom-submenu justify-between">
+                    <div class="w-1/2">
+                        <div class="flex gap-4" >
+                            <?php foreach ($menus as $menu):?>
+
+                                <div class="max-w-52 w-full">
+                                    <h3 class="font-bold text-xs tracking-wide mb-6 uppercase text-black-10"><?=$menu['title']?></h3>
+                                    <ul class="menu">
+                                        <?php foreach ($menu['items'] as $it):?>
+                                            <li class="seb-menu-item"><a href="<?=get_term_link($it->term_id)?>"><?=$it->name?></a></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+
+                            <?php endforeach;?>
+                        </div>
+                    </div>
+
+                    <div class="w-1/2">
+                        <div class="flex justify-end gap-2">
+                            <?php foreach ($images as $image):?>
+
+                                <div class="relative max-h-80 rounded overflow-hidden">
+                                    <img class="w-full h-full object-cover " src="<?=$image['image']?>" alt="<?=get_bloginfo()?>">
+                                    <a class="link absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center w-full h-full bg-black-10/40 uppercase text-white-30 font-bold hover:bg-black-10/0 hover:text-[0px] ease transition-all" href="<?=$image['link']['url']?>" target="_self"><span><?=$image['link']['title']?></span></a>
+                                </div>
+
+                            <?php endforeach;?>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            endif;
+        endforeach;
+    endif;
+    ?>
+</div>
+
+
+
+
+<div class="mobile-menu fixed top-[56px] left-0 right-0 w-full bg-white-10 z-50 opacity-0 -translate-y-3 invisible overflow-x-auto h-full pb-10">
+    <div class="px-4 py-8">
+        <div class="flex flex-row justify-between gap-4">
+            <nav class="flex-1" role="navigation">
+                <?php mobile_nav(); ?>
+             </nav>
+             <div class="flex-1 flex items-end flex-col *:mb-4">
+                 <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide"
+                    href="<?php echo is_user_logged_in() ? get_permalink(get_option('woocommerce_myaccount_page_id')) : wc_get_page_permalink('myaccount'); ?>"
+                    target="_self">
+                     <?php echo is_user_logged_in() ? 'Мой аккаунт' : 'Вход'; ?>
+                 </a>
+                 <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" target="_self">
+                     избранное (0)
+                 </a>
+                 <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="<?php echo wc_get_cart_url(); ?>" target="_self">
+                     Корзина (<span class="align-text-bottom" id="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
+                 </a>
+
+             </div>
+
+        </div>
+        <div id="menu-tabs" class="mt-14">
+            <?php
+            $menu_name = 'header-menu';
+            $menu_items = wp_get_nav_menu_items($menu_name);
+
+            if ($menu_items): ?>
+                <div class="menu-titles flex gap-4 mb-10">
+                <?php foreach ($menu_items as $key => $item):
+                    $menus = get_field('add_menus', $item);
+                    $isSabMenu = get_field('is_sabmenu', $item);
+                    if (!empty($menus) && $isSabMenu): ?>
+                       <h3 class="text-xl font-bold tracking-wide uppercase text-gray-30  menu-title cursor-pointer <?=($key == 0)? 'active': ''?>" data-menu-id="<?=$item->ID?>"><?=$item->post_title?></h3>
+                    <?php endif;
+                endforeach; ?>
+               </div>
+
+                <?php foreach ($menu_items as $key => $item):
+                    $menus = get_field('add_menus', $item);
+                    $images = get_field('image_menu', $item);
+                    $isSabMenu = get_field('is_sabmenu', $item);
+                    if (!empty($menus) && $isSabMenu): ?>
+                        <div data-menu-id="<?=$item->ID?>" class="menu-content <?= $key === 0 ? '' : 'hidden' ?>">
+                            <div class="flex flex-col gap-4 justify-between">
+                                <div class="w-full">
+                                    <div class="flex gap-4">
+                                        <?php foreach ($menus as $menu): ?>
+                                            <div class="w-full">
+                                                <h3 class="font-bold text-xs tracking-wide mb-6 uppercase text-black-10"><?=$menu['title']?></h3>
+                                                <ul class="menu">
+                                                    <?php foreach ($menu['items'] as $it): ?>
+                                                        <li class="mobile-menu-item"><a href="<?=get_term_link($it->term_id)?>"><?=$it->name?></a></li>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="flex gap-2">
+                                        <?php foreach ($images as $image): ?>
+                                            <div class="basis-1/2 relative max-h-[25vmax] rounded overflow-hidden">
+                                                <img class="w-full h-full object-cover" src="<?=$image['image']?>" alt="<?=get_bloginfo()?>">
+                                                <a class="link absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center w-full h-full bg-black-10/40 uppercase text-white-30 text-xs font-bold hover:bg-black-10/0 hover:text-[0px] ease transition-all" href="<?=$image['link']['url']?>" target="_self"><span><?=$image['link']['title']?></span></a>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                    endif;
+                endforeach;
+            endif;
+            ?>
+        </div>
     </div>
 </div>

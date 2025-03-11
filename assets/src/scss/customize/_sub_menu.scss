@@ -1,0 +1,19 @@
+.sub-menu{
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  &.toggled{
+    @apply opacity-100 translate-y-0 visible;
+  }
+}
+.custom-submenu{
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  &.toggled{
+    @apply opacity-100 translate-y-0 visible h-auto;
+  }
+}
+
+.seb-menu-item{
+  @apply block font-relaway font-semibold text-sm tracking-wide sm:mb-3;
+  &:last-child{
+    @apply mb-2.5;
+  }
+}

@@ -1,8 +1,6 @@
 <?php
 
-if ( ! current_user_can( 'manage_options' ) ) {
-//    show_admin_bar( false );
-}
+show_admin_bar( false );
 
 add_action( 'after_setup_theme', 'blaar_theme_setup' );
 function blaar_theme_setup() {

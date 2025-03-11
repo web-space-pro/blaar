@@ -23,17 +23,15 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 
 <?php if ( WC()->cart && ! WC()->cart->is_empty() ) : ?>
 
-    <div class="relative group">
-        <!-- Отображение количества товаров -->
-        <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide sm:mr-6" href="<?php echo wc_get_cart_url(); ?>" target="_self">
-            Корзина (<span class="align-middle" id="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
-        </a>
-    </div>
+    <!-- Отображение количества товаров -->
+    <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="<?php echo wc_get_cart_url(); ?>" target="_self">
+        Корзина (<span class="align-text-bottom" id="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
+    </a>
 
 <?php else : ?>
 
-    <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide sm:mr-6" href="<?php echo wc_get_cart_url(); ?>" target="_self">
-        Корзина (<span class="align-middle" id="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
+    <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="<?php echo wc_get_cart_url(); ?>" target="_self">
+        Корзина (<span class="align-text-bottom" id="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
     </a>
 
 <?php endif; ?>

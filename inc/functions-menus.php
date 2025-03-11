@@ -2,11 +2,12 @@
 add_action('after_setup_theme', 'blaar_theme_register_nav_menu');
 add_filter('walker_nav_menu_start_el', 'blaar_theme_add_caret_to_menu', 10, 4);
 add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args');
-add_filter('show_admin_bar', '__return_false');
+
 function blaar_theme_register_nav_menu()
 {
     register_nav_menu('header-menu', 'Header Menu');
     register_nav_menu('footer-menu', 'Footer Menu');
+    register_nav_menu('mobile-menu', 'Mobile Menu');
 }
 
 # Header Menu
@@ -57,6 +58,30 @@ function footer_nav()
     );
 }
 
+function mobile_nav()
+{
+    wp_nav_menu(
+        array(
+            'theme_location' => 'mobile-menu',
+            'menu' => '',
+            'container' => '',
+            'container_class' => 'menu-{menu slug}-container',
+            'container_id' => '',
+            'menu_class' => 'menu-mobile flex flex-col',
+            'menu_id' => '',
+            'echo' => true,
+            'fallback_cb' => 'wp_page_menu',
+            'before' => '',
+            'after' => '',
+            'link_before' => '',
+            'link_after' => '',
+            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+            'depth' => 0,
+            'walker' => ''
+        )
+    );
+}
+
 function my_wp_nav_menu_args($args = '')
 {
     $args['container'] = false;
@@ -69,4 +94,6 @@ function blaar_theme_add_caret_to_menu($item_output, $item, $depth, $args) {
     }
     return $item_output;
 }
+
+
 

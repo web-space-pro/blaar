@@ -166,3 +166,14 @@ span.price{
   @apply text-xl;
  }
 }
+
+//head mini cart
+.widget_shopping_cart{
+ @apply leading-none;
+ span{
+  @apply align-text-bottom;
+ }
+ .widget_shopping_cart_content{
+  @apply leading-[0];
+ }
+}
