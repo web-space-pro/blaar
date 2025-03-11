@@ -21,7 +21,7 @@
 <body <?php body_class('flex flex-col min-h-screen antialiased font-relaway font-normal leading-normal text-sm xs:text-base text-black-10 selection:bg-black-10 selection:text-white-10'); ?> data-page-id="<?php the_ID(); ?>">
 <?php wp_body_open(); ?>
 
-<header class="max-w-full-client-width px-4 top-0 sticky  z-40 w-full bg-white-20 backdrop-blur-md overflow-hidden">
+<header class="max-w-full-client-width px-4 sm:px-6 top-0 sticky  z-40 w-full bg-white-20 backdrop-blur-md overflow-hidden">
     <div class="flex justify-between gap-4 items-center flex-wrap w-full py-4">
         <div class="hidden xl:flex xl:basis-5/12 justify-start">
             <nav class="hidden xs:flex flex-row" role="navigation">

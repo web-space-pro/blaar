@@ -27,3 +27,15 @@ li.mobile-menu-item{
 .menu-title.active {
   @apply text-black-10 border-b border-black-10;
 }
+
+.menu-footer{
+  .menu-item, li.page_item{
+    @apply block font-relaway font-normal text-xs tracking-wide mb-4;
+    &:last-child{
+      @apply mb-0;
+    }
+    a{
+      @apply text-gray-60;
+    }
+  }
+}

@@ -95,50 +95,6 @@ span.price{
 .woocommerce-notices-wrapper{
  display: none!important;
 }
-
-.footer{
- h3{
-  @apply font-relaway mb-8;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 133%;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
- }
- .menu{
-   flex-direction: column;
-   li{
-    margin-bottom: 16px;
-   }
-  }
-  ul.custom{
-   li{
-    list-style: none;
-    margin-bottom: 16px;
-    a,span{
-     display: block;
-    }
-    a{
-     @apply font-relaway;
-     font-weight: 600;
-     font-size: 12px;
-     line-height: 133%;
-     letter-spacing: -0.02em;
-     margin-bottom: 0;
-    }
-    span{
-     margin-top: 6px;
-     font-weight: 500;
-     font-size: 12px;
-     line-height: 133%;
-     letter-spacing: -0.02em;
-     color: #bbb;
-    }
-   }
-  }
-}
-
-
 //Single peoduct
 
 .woocommerce-product-gallery{
