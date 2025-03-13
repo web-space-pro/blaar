@@ -24,6 +24,44 @@ if ( ! is_a( $product, WC_Product::class ) || ! $product->is_visible() ) {
 	return;
 }
 ?>
+
+<?php
+// вывод кастомного изображения
+// Проверяем, является ли товар вариативным
+if ($product->is_type('variable')) {
+    $default_attributes = $product->get_default_attributes();
+    $variations = $product->get_children();
+    $default_variation_image = '';
+
+    foreach ($variations as $variation_id) {
+        $variation = new WC_Product_Variation($variation_id);
+        $match = true;
+
+        foreach ($default_attributes as $key => $value) {
+            if ($variation->get_attribute($key) !== $value) {
+                $match = false;
+                break;
+            }
+        }
+
+        if ($match) {
+            // Берем галерею из вариации
+            $gallery_images = get_post_meta($variation_id, 'woo_variation_gallery_images', true);
+            if (!empty($gallery_images) && is_array($gallery_images)) {
+                $default_variation_image = wp_get_attachment_image_src($gallery_images[0], 'woocommerce_thumbnail')[0];
+            }
+            break;
+        }
+    }
+}
+
+// Если у вариации нет галереи, берем галерею основного товара
+if (empty($default_variation_image)) {
+    $gallery_images = $product->get_gallery_image_ids();
+    $default_variation_image = !empty($gallery_images) ? wp_get_attachment_image_src($gallery_images[0], 'woocommerce_thumbnail')[0] : '';
+}
+?>
+
 <li <?php wc_product_class( 'leading-4 flex flex-col items-stretch relative product', $product ); ?>>
     <div class="product-image relative w-full overflow-hidden mb-3 rounded-[2px]">
         <?php woocommerce_template_loop_product_link_open(); ?>
@@ -34,57 +72,20 @@ if ( ! is_a( $product, WC_Product::class ) || ! $product->is_visible() ) {
          * @hooked woocommerce_show_product_loop_sale_flash - 10
          * @hooked woocommerce_template_loop_product_thumbnail - 10
          */
-      //  do_action( 'woocommerce_before_shop_loop_item_title' );
+         do_action( 'woocommerce_before_shop_loop_item_title' );
         ?>
         <?php woocommerce_template_loop_product_link_close(); ?>
-       <?php
-       // Проверяем, является ли товар вариативным
-       if ($product->is_type('variable')) {
-           $default_attributes = $product->get_default_attributes();
-           $variations = $product->get_children();
-           $default_variation_image = '';
-
-           foreach ($variations as $variation_id) {
-               $variation = new WC_Product_Variation($variation_id);
-               $match = true;
-
-               foreach ($default_attributes as $key => $value) {
-                   if ($variation->get_attribute($key) !== $value) {
-                       $match = false;
-                       break;
-                   }
-               }
-
-               if ($match) {
-                   // Берем галерею из вариации
-                   $gallery_images = get_post_meta($variation_id, 'woo_variation_gallery_images', true);
-                   if (!empty($gallery_images) && is_array($gallery_images)) {
-                       $default_variation_image = wp_get_attachment_image_src($gallery_images[0], 'woocommerce_thumbnail')[0];
-                   }
-                   break;
-               }
-           }
-       }
-
-       // Если у вариации нет галереи, берем галерею основного товара
-       if (empty($default_variation_image)) {
-           $gallery_images = $product->get_gallery_image_ids();
-           $default_variation_image = !empty($gallery_images) ? wp_get_attachment_image_src($gallery_images[0], 'woocommerce_thumbnail')[0] : '';
-       }
-       ?>
 
         <div class="product-image relative w-full overflow-hidden mb-3 rounded-[2px]" data-product-id="<?php echo $product->get_id(); ?>">
             <a href="<?php the_permalink(); ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
                 <?php echo woocommerce_get_product_thumbnail(); ?>
-
                 <?php if (!empty($default_variation_image)) : ?>
-                    <span class="cfvsw-original-thumbnail">
-                <img src="<?php echo esc_url($default_variation_image); ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="">
-            </span>
+                <span class="cfvsw-original-thumbnail">
+                    <img src="<?php echo esc_url($default_variation_image); ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="">
+                </span>
                 <?php endif; ?>
             </a>
         </div>
-
     </div>
     <div class="loop_content flex flex-col grow md:flex-row gap-x-4 gap-y-2 items-stretch justify-between pr-2">
         <?php

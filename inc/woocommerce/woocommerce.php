@@ -3,7 +3,7 @@
 add_action( 'after_setup_theme', 'blaar_wooc_theme_setup' );
 
 //Удаление всех стилей WooCommerce
-//add_action('wp_enqueue_scripts', 'blaar_dequeue_woocommerce_styles', 99);
+add_action('wp_enqueue_scripts', 'blaar_dequeue_woocommerce_styles', 99);
 
 
 function blaar_wooc_theme_setup() {
