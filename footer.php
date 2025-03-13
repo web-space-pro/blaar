@@ -20,7 +20,7 @@ if (function_exists('get_field')) {
 }
 ?>
  <footer class="footer w-full">
-     <div class="px-4 sm:px-6">
+     <div class="px-4 sm:px-6 pb-4 sm:pb-6">
          <hr class="bg-gray-10">
          <div class="pt-10 grid gap-4 sm:gap-10 grid-cols-2 sm:grid-cols-4">
              <div>
@@ -77,7 +77,7 @@ if (function_exists('get_field')) {
              </div>
          </div>
      </div>
-    <div class="grid gap-4 sm:gap-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 bg-white-20 py-3 px-4 sm:px-6">
+     <div class="grid gap-4 sm:gap-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 bg-white-20 py-3 px-4 sm:px-6">
         <div class="order-2 sm:order-1 text-sm font-medium">
             © BLAAR. 2009–<?= date("Y")?>
         </div>

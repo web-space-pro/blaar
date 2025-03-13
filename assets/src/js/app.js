@@ -5,7 +5,6 @@ try {
     require("./modules/menu");
     // require("./modules/generall");
     require("./modules/woocommerce");
-    //require("./modules/filter-project");
    // require("./modules/custom-select");
 }
 catch (e) {

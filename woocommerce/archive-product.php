@@ -50,6 +50,11 @@ get_header( 'shop' );
             ?>
         </div>
 
+        <div>
+            filter
+            <?php echo do_shortcode('[wpf-filters id=1]') ?>
+        </div>
+
         <?php
         /**
          * Выводим категории

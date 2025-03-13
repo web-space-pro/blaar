@@ -14,7 +14,6 @@ try {
   __webpack_require__(/*! ./modules/menu */ "./assets/src/js/modules/menu.js");
   // require("./modules/generall");
   __webpack_require__(/*! ./modules/woocommerce */ "./assets/src/js/modules/woocommerce.js");
-  //require("./modules/filter-project");
   // require("./modules/custom-select");
 } catch (e) {
   console.log('JS ERROR!!!', e);
@@ -59,10 +58,10 @@ document.addEventListener("DOMContentLoaded", function () {
           submenu.classList.remove("toggled");
           subMenuWrap.classList.remove("toggled");
         }
-      }, 200); // Даем 200 мс на переход к подменю
+      }, 200); //  200 мс на переход к подменю
     });
     submenu.addEventListener("mouseenter", function () {
-      clearTimeout(timeoutId); // Отменяем скрытие
+      clearTimeout(timeoutId);
       submenu.classList.add("toggled");
       subMenuWrap.classList.add("toggled");
     });
@@ -72,16 +71,16 @@ document.addEventListener("DOMContentLoaded", function () {
           submenu.classList.remove("toggled");
           subMenuWrap.classList.remove("toggled");
         }
-      }, 200); // Даем 200 мс на переход обратно
+      }, 200);
     });
 
     // Отключаем переход по клику
     item.addEventListener("click", function (e) {
-      e.preventDefault(); // Отключаем стандартное поведение
-      item.style.pointerEvents = "none"; // Отключаем клики на пункте
+      e.preventDefault();
+      item.style.pointerEvents = "none";
       setTimeout(function () {
-        item.style.pointerEvents = ""; // Включаем обратно клики после задержки
-      }, 500); // Даем немного времени для выполнения действия (например, анимации)
+        item.style.pointerEvents = "";
+      }, 500);
     });
   });
 });
@@ -113,9 +112,54 @@ document.addEventListener("DOMContentLoaded", function () {
 /*!**********************************************!*\
   !*** ./assets/src/js/modules/woocommerce.js ***!
   \**********************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+__webpack_require__(/*! ./woocommerce/loop */ "./assets/src/js/modules/woocommerce/loop.js");
+
+/***/ }),
+
+/***/ "./assets/src/js/modules/woocommerce/loop.js":
+/*!***************************************************!*\
+  !*** ./assets/src/js/modules/woocommerce/loop.js ***!
+  \***************************************************/
 /***/ (() => {
 
+jQuery(document).ready(function ($) {
+  /* ***********************************************************
+     этот кусок кода отвечает за вывод доп. изображения в loop
+     и вывод доп.изображение при переключении вариаций
+  */
+  function updateVariationImage(variation, productWrapper) {
+    var productImageWrapper = productWrapper.find('.cfvsw-original-thumbnail img');
+    if (variation && variation.woo_variation_gallery_images && variation.woo_variation_gallery_images.length > 0) {
+      var firstVariationImage = variation.woo_variation_gallery_images[0];
+      productImageWrapper.attr('src', firstVariationImage);
+    }
+  }
 
+  // Отслеживаем смену вариации в cfvsw_variations_form
+  $(document).on('found_variation', '.cfvsw_variations_form', function (event, variation) {
+    var productWrapper = $(this).closest('.product');
+    updateVariationImage(variation, productWrapper);
+  });
+
+  // Обновляем изображение при загрузке страницы, если вариация выбрана по умолчанию
+  $('.cfvsw_variations_form').each(function () {
+    var form = $(this);
+    var productWrapper = form.closest('.product');
+    var selectedVariation = form.data('product_variations');
+    if (selectedVariation) {
+      var activeVariation = selectedVariation.find(function (variation) {
+        return variation.is_in_stock && variation.display_price;
+      });
+      if (activeVariation) {
+        updateVariationImage(activeVariation, productWrapper);
+      }
+    }
+  });
+
+  /* ******** конец кода ********/
+});
 
 /***/ }),
 

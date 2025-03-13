@@ -5,9 +5,6 @@
             $('body').toggleClass('ov-hidden');
         });
     });
-
-
-
 })(jQuery);
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -34,11 +31,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     submenu.classList.remove("toggled");
                     subMenuWrap.classList.remove("toggled");
                 }
-            }, 200); // Даем 200 мс на переход к подменю
+            }, 200); //  200 мс на переход к подменю
         });
 
         submenu.addEventListener("mouseenter", function () {
-            clearTimeout(timeoutId); // Отменяем скрытие
+            clearTimeout(timeoutId);
             submenu.classList.add("toggled");
             subMenuWrap.classList.add("toggled");
         });
@@ -49,16 +46,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     submenu.classList.remove("toggled");
                     subMenuWrap.classList.remove("toggled");
                 }
-            }, 200); // Даем 200 мс на переход обратно
+            }, 200);
         });
 
         // Отключаем переход по клику
         item.addEventListener("click", function (e) {
-            e.preventDefault(); // Отключаем стандартное поведение
-            item.style.pointerEvents = "none"; // Отключаем клики на пункте
+            e.preventDefault();
+            item.style.pointerEvents = "none";
             setTimeout(() => {
-                item.style.pointerEvents = ""; // Включаем обратно клики после задержки
-            }, 500); // Даем немного времени для выполнения действия (например, анимации)
+                item.style.pointerEvents = "";
+            }, 500);
         });
     });
 });

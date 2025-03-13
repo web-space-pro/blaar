@@ -16,6 +16,10 @@
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <?php wp_head(); ?>
+    <?php
+    // Получаем ссылку на страницу списка желаемого
+    $wishlist_page_url = function_exists('tinv_url_wishlist') ? tinv_url_wishlist() : '#';
+    ?>
 </head>
 
 <body <?php body_class('flex flex-col min-h-screen antialiased font-relaway font-normal leading-normal text-sm xs:text-base text-black-10 selection:bg-black-10 selection:text-white-10'); ?> data-page-id="<?php the_ID(); ?>">
@@ -56,9 +60,9 @@
                    target="_self">
                     <?php echo is_user_logged_in() ? 'Мой аккаунт' : 'Вход'; ?>
                 </a>
-                <?php the_widget( 'WC_Widget_Cart', 'title=' ); ?>
-                <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="/" target="_self">
-                    избранное (0)
+                <?php //the_widget( 'WC_Widget_Cart', 'title=' ); ?>
+                <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="<?= esc_url($wishlist_page_url); ?>" target="_self">
+                    избранное
                 </a>
             </div>
             <div class="flex xl:hidden btn-burger ml-3">
