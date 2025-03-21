@@ -1,0 +1,23 @@
+.my-breadcrumbs{
+  @apply mb-0 text-xs text-gray-30 font-medium -tracking-[0.02em];
+  a{
+    @apply text-gray-30 decoration-gray-30;
+    &:hover,&:focus, &:visited{
+      @apply text-gray-30;
+    }
+  }
+  span{
+    @apply px-1;
+  }
+}
+
+//woocommerce-breadcrumb
+.woocommerce-breadcrumb{
+  @apply text-sm text-gray-30 font-medium mb-2;
+  a:not(.link){
+    @apply text-sm text-gray-30 font-medium border-gray-30;
+    &:hover{
+      @apply border-gray-30;
+    }
+  }
+}

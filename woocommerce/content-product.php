@@ -81,7 +81,7 @@ if (empty($default_variation_image)) {
                 <?php echo woocommerce_get_product_thumbnail(); ?>
                 <?php if (!empty($default_variation_image)) : ?>
                 <span class="cfvsw-original-thumbnail">
-                    <img src="<?php echo esc_url($default_variation_image); ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="">
+                    <img src="<?php echo esc_url($default_variation_image); ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="<?=get_bloginfo()?>">
                 </span>
                 <?php endif; ?>
             </a>

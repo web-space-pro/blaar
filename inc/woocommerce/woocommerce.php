@@ -59,12 +59,42 @@ function blaar_custom_price_display($price_html, $product) {
 }
 
 
+//скрыть ссылку "Главная" из хлебных крошек
+function remove_home_from_breadcrumbs($defaults) {
+    $defaults['home'] = ''; // Убираем название главной страницы
+    return $defaults;
+}
+add_filter('woocommerce_breadcrumb_defaults', 'remove_home_from_breadcrumbs');
+
+function custom_woocommerce_breadcrumb_separator($defaults) {
+    $defaults['delimiter'] = ' > '; // Измените на нужный символ или HTML
+    return $defaults;
+}
+add_filter('woocommerce_breadcrumb_defaults', 'custom_woocommerce_breadcrumb_separator');
+
+// Удаляет последний элемент из массива хлебных крошек
+function remove_last_breadcrumb_item($crumbs) {
+    if (!empty($crumbs)) {
+        array_pop($crumbs);
+    }
+    return $crumbs;
+}
+add_filter('woocommerce_get_breadcrumb', 'remove_last_breadcrumb_item');
+
+//изменить заголовок "Related Products"
+add_filter('woocommerce_product_related_products_heading', function () {
+    return 'Вам может понравиться';
+});
+
+
 
 
 /* -------File------*/
 require 'woocommerce-archive.php';
+require 'woocommerce-single-product.php';
+
 //require 'woocommerce-ajax.php';
-//require 'woocommerce-single-product.php';
+
 
 
 

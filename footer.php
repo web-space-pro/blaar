@@ -93,7 +93,6 @@ if (function_exists('get_field')) {
         </div>
     </div>
 </footer>
-
 <?php wp_footer(); ?>
 
 </body>

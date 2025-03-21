@@ -1,19 +1,36 @@
 <?php
-// убрать возможность выбора количества на странице товара
-add_filter('woocommerce_is_sold_individually', 'blaar_hide_quantity_input_on_single_product', 10, 2);
+//удалить оберку страници (делаем свою)
+remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
+remove_action('woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
 
+//Удаление хлебных крошек
+remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
+
+//удаление стандартных хуков из woocommerce_single_product_summary и затем вызрв их отдельно в нужном месте
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 5);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_price', 10);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_sharing', 50);
+remove_action('woocommerce_single_product_summary', [WC_Structured_Data::class, 'generate_product_data'], 60);
+// конец улвдения
 
 // Убирает отображение метки "Скидка" над товаром
 //remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10);
 
 // Отключает блок "С этим товаром покупают" (Upsell товары)
-remove_action('woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15);
+//remove_action('woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15);
 
 // Отключает вывод связанных товаров (Related Products)
-remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
+//remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
 
 // Убирает вкладки с дополнительной информацией (Описание, Характеристики, Отзывы и т. д.)
 remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
+
+// Убирать стандартное описание
+//remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
 
 // Убирает отображение галереи изображений товара
 //remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
@@ -21,15 +38,6 @@ remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_pr
 // Отключает блок с мета-данными товара (Категории, Метки, SKU)
 //remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
 
-
-//Вывод Комплектации перед характеристиками ( ACF )
-add_action('woocommerce_single_product_summary', 'blaar_display_product_equipment', 24);
-
-// Вывод Атрибутов  перед описанием
-add_action('woocommerce_single_product_summary', 'blaar_display_product_attributes', 25);
-
-// Убирать стандартное описание
-//remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
 
 
 /// Вывод описание перед кнопкой "В корзину"
@@ -40,6 +48,20 @@ add_filter('wc_add_to_cart_message_html', function ($message, $products) {
     return preg_replace('/<a .*?class=".*?wc-forward.*?".*?>.*?<\/a>/', '', $message);
 }, 10, 2);
 
+// Удаляет описание вариации + Удаляет доступность вариации
+add_filter('woocommerce_available_variation', function ($variations) {
+    unset($variations['variation_description']);
+//    unset($variations['availability_html']);
+    return $variations;
+});
+
+
+
+
+
+
+// убрать возможность выбора количества на странице товара
+add_filter('woocommerce_is_sold_individually', 'blaar_hide_quantity_input_on_single_product', 10, 2);
 
 add_filter('woocommerce_add_error', function ($error) {
     return wp_strip_all_tags($error);
@@ -51,23 +73,23 @@ function blaar_display_product_attributes() {
     $attributes = $product->get_attributes();
 
     if (!empty($attributes)) {
-        echo '<div class="attributes pt-4 mb-6 border-black">';
-        echo '<h3 class="font-sans text-xl text-base  mb-4">Характеристики</h3>';
-        echo '<table class="w-full font-sans">';
+        echo '<div class="attributes pt-5">';
+        echo '<h3 class="uppercase text-xs 2xl:text-sm font-bold">Характеристики</h3>';
+        echo '<table class="w-full mt-6">';
         echo '<tbody>';
 
         foreach ($attributes as $attribute) {
-            echo '<tr class="mb-2">';
+            echo '<tr class="border-b">';
 
             // Название атрибута
-            echo '<td class="font-medium text-black">' . wc_attribute_label($attribute->get_name()) . '</td>';
+            echo '<td class="font-medium text-gray-60 pb-3 pt-3">' . wc_attribute_label($attribute->get_name()) . '</td>';
 
             // Значения атрибута
             if ($attribute->is_taxonomy()) {
                 $terms = wc_get_product_terms($product->get_id(), $attribute->get_name(), array('fields' => 'names'));
-                echo '<td class="text-gray-10">' . implode(', ', $terms) . '</td>';
+                echo '<td>' . implode(', ', $terms) . '</td>';
             } else {
-                echo '<td class="text-gray-10">' . implode(', ', $attribute->get_options()) . '</td>';
+                echo '<td>' . implode(', ', $attribute->get_options()) . '</td>';
             }
 
             echo '</tr>';
@@ -79,30 +101,6 @@ function blaar_display_product_attributes() {
     }
 }
 
-function blaar_display_product_equipment() {
-    global $product;
-
-    // Получаем значения чекбоксов из ACF
-    $equipments = get_field('product_equipment', $product->get_id());
-
-    // Проверяем, есть ли данные
-    if ($equipments && is_array($equipments)) {
-        echo '<div class="equipment mt-8">';
-        echo '<div class="custom-select relative w-full">';
-        echo '<div class="custom-select-trigger bg-transparent text-gray-20 border-b border-black py-2 text-base flex justify-between items-center cursor-pointer relative">Выберите комплектацию</div>';
-        echo '<div class="custom-options absolute top-full left-0 w-full bg-white-10 border border-gray-10 hidden z-10 shadow-md">';
-
-        foreach ($equipments as $equipment) {
-            echo '<div class="custom-option px-3 py-2 bg-white-10 text-black text-sm cursor-pointer hover:bg-gray-10 hover:text-white-10 transition">' . esc_html($equipment['label']) . '</div>';
-        }
-
-        echo '</div>'; // .custom-options
-        echo '<input type="hidden" name="product_equipment">';
-        echo '</div>'; // .custom-select
-        echo '</div>';
-    }
-}
-
 // Отключает выбор количества
 function blaar_hide_quantity_input_on_single_product($return, $product) {
     if (is_product()) {
@@ -110,4 +108,92 @@ function blaar_hide_quantity_input_on_single_product($return, $product) {
     }
     return $return;
 }
+
+
+// custom list image for product-page
+function get_product_images() {
+    global $product;
+    if (!$product) return;
+
+    $images = [];
+
+    if ($product->is_type('simple')) {
+        // Основное изображение
+        if (has_post_thumbnail()) {
+            $images[] = get_the_post_thumbnail_url($product->get_id(), 'full');
+        } else {
+            $images[] = wc_placeholder_img_src(); // Дефолтное изображение
+        }
+
+        // Галерея товара
+        $gallery_ids = $product->get_gallery_image_ids();
+        foreach ($gallery_ids as $id) {
+            $images[] = wp_get_attachment_url($id);
+        }
+    } elseif ($product->is_type('variable')) {
+        // Получаем вариации
+        $variations = $product->get_available_variations();
+
+        foreach ($variations as $variation) {
+            $variation_id = $variation['variation_id'];
+            $image_id = get_post_thumbnail_id($variation_id);
+            $gallery_images = get_post_meta($variation_id, 'woo_variation_gallery_images', true);
+
+            // Основное изображение вариации
+            if ($image_id) {
+                $images[$variation_id][] = wp_get_attachment_url($image_id);
+            } elseif (has_post_thumbnail()) {
+                $images[$variation_id][] = get_the_post_thumbnail_url($product->get_id(), 'full');
+            } else {
+                $images[$variation_id][] = wc_placeholder_img_src();
+            }
+
+            // Галерея вариации
+            if (!empty($gallery_images)) {
+                foreach ($gallery_images as $img_id) {
+                    $images[$variation_id][] = wp_get_attachment_url($img_id);
+                }
+            }
+        }
+    }
+
+    return $images;
+}
+add_action('wp_ajax_load_variation_images', 'load_variation_images');
+add_action('wp_ajax_nopriv_load_variation_images', 'load_variation_images');
+
+//js - при клике на иконки
+function load_variation_images() {
+    $variation_id = intval($_POST['variation_id']);
+    $images = [];
+
+    if ($variation_id) {
+        $image_id = get_post_thumbnail_id($variation_id);
+        $gallery_images = get_post_meta($variation_id, 'woo_variation_gallery_images', true);
+
+        if ($image_id) {
+            $images[] = wp_get_attachment_url($image_id);
+        } elseif (has_post_thumbnail()) {
+            global $product;
+            $images[] = get_the_post_thumbnail_url($product->get_id(), 'full');
+        } else {
+            $images[] = wc_placeholder_img_src();
+        }
+
+        if (!empty($gallery_images)) {
+            foreach ($gallery_images as $img_id) {
+                $images[] = wp_get_attachment_url($img_id);
+            }
+        }
+    }
+
+    wp_send_json($images);
+}
+// custom list image for product-page --- end
+
+
+
+
+
+
 

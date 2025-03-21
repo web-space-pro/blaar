@@ -16,13 +16,13 @@
   input[type="datetime-local"],
   input[type="color"],
   textarea {
-    @apply px-0.5 py-3 border-b border-gray-10 text-base w-full text-gray-10 inline-block font-sans bg-transparent focus:bg-transparent;
+    @apply px-0.5 py-3  text-base w-full text-white-10 inline-block font-oswald bg-black-10 focus:bg-transparent;
   }
   textarea{
     @apply h-24 resize-none;
   }
   input::placeholder {
-    @apply text-base text-gray-20 font-sans;
+    @apply text-base text-gray-10 font-sans;
   }
 
   input:-webkit-autofill {
@@ -33,7 +33,7 @@
   button,
   input[type="button"],
   input[type="submit"] {
-    @apply w-full cursor-pointer px-5 py-2 border border-black bg-black text-white-10  inline-block  text-base font-medium font-reg lowercase transition ease-in-out duration-500;
+    @apply w-full cursor-pointer px-5 py-2 border border-black-10 bg-black-10 text-white-10  inline-block  text-base font-medium font-oswald lowercase transition ease-in-out duration-500;
   }
 
   //button:active,
@@ -48,7 +48,7 @@
   input[type="submit"]:hover,
   //input[type="submit"]:focus
    {
-    @apply bg-transparent text-black;
+    @apply bg-transparent text-black-20;
   }
 
   input[type="text"]:focus,
@@ -68,15 +68,12 @@
   input[type="color"]:focus,
   textarea:focus {
     outline: none;
-    @apply border-black;
+    @apply border-black-10;
   }
 }
 
 form{
   @apply text-sm text-gray-20;
-  label{
-    @apply mb-6 block;
-  }
   a{
     @apply underline underline-offset-2 hover:no-underline;
   }
@@ -96,7 +93,7 @@ form{
     @apply text-xs pl-2.5 mt-2;
   }
   .wpcf7-response-output{
-    @apply text-sm text-gray-500 !m-0 !border-none !p-2.5;
+    @apply text-sm text-gray-500;
   }
 }
 
@@ -128,5 +125,5 @@ form{
    }
  }
  .woocommerce form .form-row.woocommerce-validated .select2-container, .woocommerce form .form-row.woocommerce-validated input.input-text, .woocommerce form .form-row.woocommerce-validated select {
-   @apply border-black;
+   @apply border-black-10;
  }

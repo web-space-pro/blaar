@@ -36,3 +36,4 @@ function sdt_remove_ver_css_js( $src, $handle )
 		$src = remove_query_arg( 'ver', $src );
 	return $src;
 }
+

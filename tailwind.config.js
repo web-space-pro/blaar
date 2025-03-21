@@ -33,6 +33,7 @@ module.exports = {
       'woocommerce/single-product/add-to-cart/simple.php',
       'woocommerce/single-product/add-to-cart/variable.php',
       'woocommerce/single-product/title.php',
+      'woocommerce/single-product/meta.php',
 
 
       'woocommerce/cart/cart.php',
@@ -71,8 +72,8 @@ module.exports = {
         'sm': '768px',
         'md': '992px',
         'lg': '1024px',
-        'xl': '1180px',
-        '2xl': '1440px',
+        'xl': '1280px',
+        '2xl': '1366px',
         '3xl': '1600px',
         '4xl': '1920px',
       },
