@@ -10,6 +10,7 @@ jQuery(document).ready(function ($) {
         if (variation && variation.woo_variation_gallery_images && variation.woo_variation_gallery_images.length > 0) {
             let firstVariationImage = variation.woo_variation_gallery_images[0];
             productImageWrapper.attr('src', firstVariationImage);
+            productImageWrapper.attr('srcset', firstVariationImage);
         }
     }
 

@@ -3,3 +3,68 @@
     @apply py-5 md:py-10 text-black-20 text-2xl md:text-3xl uppercase font-oswald;
   }
 }
+.woocommerce-no-products-found{
+  text-align: center;
+  min-height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-filters{
+  .wpfMainWrapper{
+    @apply flex flex-col lg:flex-row gap-4;
+  }
+  .wpfFilterWrapper{
+    @apply order-2 lg:order-1 flex-1 m-0;
+    .wfpTitle{
+      @apply uppercase font-oswald text-xs mb-3 lg:mb-8;
+    }
+    .wpfFilterWrapper .wpfCheckbox label{
+      &:hover{
+        &:before{
+          border: 1px solid #525766!important;
+        }
+      }
+    }
+    .wpfFilterVerScroll{
+      li{
+        @apply mb-1.5 xl:mb-4;
+        label{
+          @apply text-sm lg:text-base;
+        }
+      }
+    }
+    .wpfTitleToggle{
+      @apply block md:hidden;
+    }
+    .wpfBlockClear{
+      display: none!important;
+    }
+  }
+  .wpfFilterButtons{
+    @apply order-1 lg:order-2 flex-1 max-w-52 flex flex-col lg:flex-col-reverse justify-items-start;
+    min-width: auto;
+    .wpfButton{
+      @apply text-xs px-2.5 py-2 min-h-0 lg:text-base uppercase font-oswald font-semibold bg-black-20 text-white-30 w-full;
+      float: none!important;
+      &.wpfClearButton{
+      @apply bg-white-10 text-black-20 border border-white-40 hover:border-gray-40;
+      border: 1px solid #ebedf2;
+        &:hover{
+          border: 1px solid #bbbbbb;
+        }
+      }
+    }
+  }
+}
+
+#close-filters {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 35px;
+  cursor: pointer;
+  color: #333;
+}

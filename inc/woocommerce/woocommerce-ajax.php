@@ -25,3 +25,5 @@ add_filter( 'woocommerce_add_to_cart_fragments', function( $fragments ) {
     $fragments['#cart-count'] = ob_get_clean();
     return $fragments;
 });
+
+

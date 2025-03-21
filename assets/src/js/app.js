@@ -5,6 +5,7 @@ try {
     require("./modules/menu");
     // require("./modules/generall");
     require("./modules/woocommerce");
+    //require("./modules/modal");
     // require("./modules/custom-select");
 } catch (e) {
     console.log('JS ERROR!!!', e);

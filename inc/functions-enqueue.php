@@ -37,3 +37,12 @@ function sdt_remove_ver_css_js( $src, $handle )
 	return $src;
 }
 
+function blaar_ajax_script() {
+    ?>
+    <script>
+        let ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+    </script>
+    <?php
+}
+add_action('wp_head', 'blaar_ajax_script');
+

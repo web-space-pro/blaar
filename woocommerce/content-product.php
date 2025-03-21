@@ -32,38 +32,47 @@ if ($product->is_type('variable')) {
     $default_attributes = $product->get_default_attributes();
     $variations = $product->get_children();
     $default_variation_image = '';
+    if($default_attributes){
+        foreach ($variations as $variation_id) {
+            $variation = new WC_Product_Variation($variation_id);
+            $match = true;
 
-    foreach ($variations as $variation_id) {
-        $variation = new WC_Product_Variation($variation_id);
-        $match = true;
+            foreach ($default_attributes as $key => $value) {
+                if ($variation->get_attribute($key) !== $value) {
+                    $match = false;
+                    break;
+                }
+            }
 
-        foreach ($default_attributes as $key => $value) {
-            if ($variation->get_attribute($key) !== $value) {
-                $match = false;
+            if ($match) {
+                // Берем галерею из вариации
+                $gallery_images = get_post_meta($variation_id, 'woo_variation_gallery_images', true);
+                if (!empty($gallery_images) && is_array($gallery_images)) {
+                    $default_variation_image = wp_get_attachment_image_url($gallery_images[0], 'woocommerce_thumbnail');
+                }
                 break;
             }
         }
+    }
+} else {
+    // Для простого товара
+    $gallery_images = $product->get_gallery_image_ids();
 
-        if ($match) {
-            // Берем галерею из вариации
-            $gallery_images = get_post_meta($variation_id, 'woo_variation_gallery_images', true);
-            if (!empty($gallery_images) && is_array($gallery_images)) {
-                $default_variation_image = wp_get_attachment_image_src($gallery_images[0], 'woocommerce_thumbnail')[0];
-            }
-            break;
-        }
+    if (!empty($gallery_images) && is_array($gallery_images)) {
+        $default_variation_image = wp_get_attachment_image_url($gallery_images[0], 'woocommerce_thumbnail');
+    } else {
+        // Если галерея пустая, используем главное изображение товара
+        $default_variation_image = wp_get_attachment_image_url($product->get_image_id(), 'woocommerce_thumbnail');
     }
 }
 
-// Если у вариации нет галереи, берем галерею основного товара
-if (empty($default_variation_image)) {
-    $gallery_images = $product->get_gallery_image_ids();
-    $default_variation_image = !empty($gallery_images) ? wp_get_attachment_image_src($gallery_images[0], 'woocommerce_thumbnail')[0] : '';
-}
+//if (empty($default_variation_image)) {
+//    $default_variation_image = wp_get_attachment_image_url($product->get_image_id(), 'woocommerce_thumbnail');
+//}
 ?>
 
 <li <?php wc_product_class( 'leading-4 flex flex-col items-stretch relative product', $product ); ?>>
-    <div class="product-image relative w-full overflow-hidden mb-3 rounded-[2px]">
+    <div class="product-image relative w-full overflow-hidden mb-2 sm:mb-3 rounded-[2px]">
         <?php woocommerce_template_loop_product_link_open(); ?>
         <?php
         /**
@@ -74,20 +83,14 @@ if (empty($default_variation_image)) {
          */
          do_action( 'woocommerce_before_shop_loop_item_title' );
         ?>
-        <?php woocommerce_template_loop_product_link_close(); ?>
-
-        <div class="product-image relative w-full overflow-hidden mb-3 rounded-[2px]" data-product-id="<?php echo $product->get_id(); ?>">
-            <a href="<?php the_permalink(); ?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
-                <?php echo woocommerce_get_product_thumbnail(); ?>
-                <?php if (!empty($default_variation_image)) : ?>
-                <span class="cfvsw-original-thumbnail">
-                    <img src="<?php echo esc_url($default_variation_image); ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="<?=get_bloginfo()?>">
-                </span>
-                <?php endif; ?>
-            </a>
+        <div class="hover-img" data-product-id="<?php echo $product->get_id(); ?>">
+            <?php if (!empty($default_variation_image)) :?>
+                <img src="<?php echo esc_url($default_variation_image); ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="<?=get_bloginfo()?>">
+            <?php endif; ?>
         </div>
+        <?php woocommerce_template_loop_product_link_close(); ?>
     </div>
-    <div class="loop_content flex flex-col grow md:flex-row gap-x-4 gap-y-2 items-stretch justify-between pr-2">
+    <div class="loop_content flex  grow flex-col-reverse lg:flex-row gap-x-2 sm:gap-x-4 sm:gap-y-2 items-stretch justify-between pr-2 lg:min-h-20">
         <?php
         woocommerce_template_loop_product_link_open();
         /**
@@ -100,7 +103,7 @@ if (empty($default_variation_image)) {
         ?>
 
 
-        <div class="flex justify-between md:flex-col items-end gap-2">
+        <div class="flex justify-between flex-col items-end gap-2 relative w-full">
             <?php
             /**
              * Hook: woocommerce_after_shop_loop_item_title.
@@ -124,12 +127,6 @@ if (empty($default_variation_image)) {
             do_action( 'woocommerce_after_shop_loop_item' );
             ?>
         </div>
-<!--        --><?php
-//        if ($product->is_type('variable')) {
-//            woocommerce_variable_add_to_cart();
-//        }
-//        ?>
-
     </div>
 </li>
 

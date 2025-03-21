@@ -105,7 +105,7 @@ if ( post_password_required() ) {
                        do_action( 'woocommerce_single_product_summary' );
                        ?>
                    </div>
-                    <div class="md:w-[63%]">
+                    <div class="w-full lg:w-[63%]">
                         <?php
                         if (function_exists('woocommerce_breadcrumb')) {
                             woocommerce_breadcrumb();

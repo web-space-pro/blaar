@@ -93,6 +93,14 @@ if (function_exists('get_field')) {
         </div>
     </div>
 </footer>
+
+<div id="open-modal" class="modal-window fixed top-0 right-0 bottom-0 left-0 z-50 invisible opacity-0 pointer-events-none flex items-center justify-center transition-all duration-500">
+    <div class="modal-backdrop fixed top-0 right-0 left-0 bottom-0 cursor-pointer bg-black-900/50"></div>
+    <div class="modal p-10 bg-bg-gradient relative shadow-popup rounded-3xl mx-4">
+        <a href="#" title="Close" class="modal-close text-white-900 text-2xl absolute right-0 top-0 cursor-pointer px-3 py-2">✖</a>
+        <h3 class="text-center my-5 text-xl font-bold text-white-800">Для скачивания файла нужно заполнить поля формы</h3>
+    </div>
+</div>
 <?php wp_footer(); ?>
 
 </body>

@@ -5,6 +5,12 @@ add_action( 'after_setup_theme', 'blaar_wooc_theme_setup' );
 //Удаление всех стилей WooCommerce
 add_action('wp_enqueue_scripts', 'blaar_dequeue_woocommerce_styles', 99);
 
+//удалить оберку страници (делаем свою)
+remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
+remove_action('woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
+
+//Удаление хлебных крошек
+remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
 
 function blaar_wooc_theme_setup() {
 
@@ -50,36 +56,36 @@ function blaar_custom_price_display($price_html, $product) {
 
     if ($sale_price && $regular_price > $sale_price) {
         $discount_percent = round((($regular_price - $sale_price) / $regular_price) * 100);
-        $price_html = "<span class='sale-price'>" . wc_price($sale_price) . "</span> 
-            <span class='discount-percent'>-{$discount_percent}%</span> 
+        $price_html = "<span class='sale-price'>" . wc_price($sale_price) . "</span>
+            <span class='discount-percent'>-{$discount_percent}%</span>
             <span class='regular-price'>" . wc_price($regular_price) . "</span>";
     }
 
     return $price_html;
 }
 
-
 //скрыть ссылку "Главная" из хлебных крошек
 function remove_home_from_breadcrumbs($defaults) {
-    $defaults['home'] = ''; // Убираем название главной страницы
+    $defaults['home'] = '';
     return $defaults;
 }
 add_filter('woocommerce_breadcrumb_defaults', 'remove_home_from_breadcrumbs');
 
 function custom_woocommerce_breadcrumb_separator($defaults) {
-    $defaults['delimiter'] = ' > '; // Измените на нужный символ или HTML
+    $defaults['delimiter'] = ' > ';
     return $defaults;
 }
 add_filter('woocommerce_breadcrumb_defaults', 'custom_woocommerce_breadcrumb_separator');
 
-// Удаляет последний элемент из массива хлебных крошек
+ //Удаляет последний элемент из массива хлебных крошек
 function remove_last_breadcrumb_item($crumbs) {
-    if (!empty($crumbs)) {
+    if (is_product() && is_array($crumbs) && !empty($crumbs)) {
         array_pop($crumbs);
     }
     return $crumbs;
 }
 add_filter('woocommerce_get_breadcrumb', 'remove_last_breadcrumb_item');
+
 
 //изменить заголовок "Related Products"
 add_filter('woocommerce_product_related_products_heading', function () {

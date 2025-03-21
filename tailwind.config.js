@@ -28,7 +28,9 @@ module.exports = {
       'woocommerce/content-single-product.php',
       'woocommerce/loop/price.php',
       'woocommerce/loop/loop-start.php',
+      'woocommerce/loop/header.php',
       'woocommerce/loop/loop-end.php',
+      'woocommerce/loop/orderby.php',
 
       'woocommerce/single-product/add-to-cart/simple.php',
       'woocommerce/single-product/add-to-cart/variable.php',

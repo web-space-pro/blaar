@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+$head_menu = get_field('new_category_title', 'product_cat_' . get_queried_object_id());
 ?>
 <div class="woocommerce-products-header">
 	<?php
@@ -31,7 +32,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	 */
 	if ( apply_filters( 'woocommerce_show_page_title', true ) ) :
 		?>
-		<h1 class="text-6xl font-oswald font-normal uppercase tracking-wide text-black-10"><?php woocommerce_page_title(); ?></h1>
+        <h1 class="text-4xl xl:text-6xl font-oswald font-normal uppercase tracking-wide text-black-10">
+            <?php
+            echo !empty($head_menu) ? esc_html($head_menu) : woocommerce_page_title();
+            ?>
+        </h1>
 	<?php endif; ?>
 
 	<?php

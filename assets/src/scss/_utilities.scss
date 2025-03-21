@@ -1,4 +1,7 @@
 @layer utilities {
+  select:focus-visible{
+    outline: none;
+  }
   b,strong{
     @apply text-black-10;
   }
@@ -59,6 +62,7 @@
       @apply opacity-100 translate-y-0 visible;
     }
   }
+
 }
 
 body.ov-hidden{
@@ -67,4 +71,8 @@ body.ov-hidden{
 
 body{
   font-variant-numeric: lining-nums;
+}
+
+.modal-window.active {
+  @apply visible opacity-100 pointer-events-auto;
 }

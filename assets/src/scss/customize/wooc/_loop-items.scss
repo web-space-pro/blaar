@@ -1,15 +1,23 @@
 .products-list{
   .product-image{
-    @apply w-full h-full max-h-[26.5rem];
+    @apply w-full h-full;
     a,img{
       @apply w-full h-full;
     }
     img{
       @apply object-cover object-center;
     }
+    .hover-img, .cfvsw-original-thumbnail{
+      @apply block absolute top-0 left-0 right-0 bottom-0 opacity-0 transition-all ease-in-out duration-300;
+    }
+    &:hover{
+      .hover-img, .cfvsw-original-thumbnail{
+        opacity: 1;
+      }
+    }
   }
-  div.variations_form{
-    @apply mt-2;
+   div.variations_form{
+    @apply sm:mt-2 lg:absolute;
   }
 
   div.cfvsw-swatches-option{
@@ -17,15 +25,19 @@
     border-radius: 5px;
   }
   .cfvsw-swatches-container{
-    @apply mb-4;
+    @apply sm:mb-4 gap-1 sm:gap-2;
   }
   span.price{
-    @apply text-sm flex gap-x-1;
-    ins{
-      text-decoration: none;
+    @apply text-xs sm:text-sm flex gap-x-2 flex-row-reverse;
+    .amount{
+      @apply text-black-10 block  font-normal text-xs sm:text-sm uppercase;
     }
-    del{
-      @apply text-sm mr-1;
+    .regular-price .amount{
+      @apply text-gray-30 font-medium text-xs line-through inline-block;
+    }
+
+    .discount-percent{
+      @apply absolute -top-9 -right-2 text-white-30 text-xs px-2 py-1 leading-tight font-medium inline-block bg-black-20 rounded-[2px];
     }
   }
   .tinvwl_add_to_wishlist-text{
@@ -34,24 +46,21 @@
 }
 
 .loop_add_to_cart{
-  @apply absolute top-3 right-3 flex flex-col-reverse;
+  @apply absolute top-1 right-1 xs:top-3 xs:right-3 flex flex-col-reverse;
   .add_to_cart_button{
+    @apply h-6 w-6 xs:w-8 xs:h-8 top-7 xs:top-9;
     border-radius: 2px;
-    top: 36px;
-    width: 32px;
-    height: 32px;
     padding: 4px!important;
     font-size: 0!important;
     margin: 0!important;
     position: relative;
     background:  #fff!important;
     &:before{
+      @apply h-4 w-4 xs:w-6 xs:h-6;
       content: '';
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M18.7703 8.61267C18.6893 7.83516 18.0414 7.25202 17.2558 7.25202H15.6441V6.64459C15.6441 4.63602 14.008 3 11.9995 3C9.99088 3 8.35487 4.63602 8.35487 6.64459V7.25202H6.74315C5.96563 7.25202 5.31771 7.83516 5.23671 8.61267L4.21623 18.3235C4.21623 18.3802 4.20813 18.4288 4.20813 18.4855C4.20813 19.3197 4.88845 20 5.72266 20H18.2763C18.7055 20 19.1186 19.8137 19.402 19.4979C19.6855 19.182 19.8313 18.7527 19.7827 18.3235L18.7622 8.60457L18.7703 8.61267ZM9.57783 6.64459C9.57783 5.30824 10.6712 4.21486 12.0076 4.21486C13.3439 4.21486 14.4373 5.30824 14.4373 6.64459V7.25202H9.57783V6.64459ZM18.5111 18.696C18.5111 18.696 18.4058 18.7932 18.2844 18.7932H5.73076C5.57688 18.7851 5.42299 18.6556 5.43109 18.4612L6.45158 8.74226C6.46778 8.58838 6.59736 8.46689 6.75125 8.46689H8.36297V9.60886C8.17669 9.77894 8.0552 10.0219 8.0552 10.2892C8.0552 10.7913 8.46015 11.1963 8.9623 11.1963C9.46444 11.1963 9.8694 10.7913 9.8694 10.2892C9.8694 10.0219 9.75601 9.77894 9.56163 9.60886V8.46689H14.4211V9.60886C14.2348 9.77894 14.1133 10.0219 14.1133 10.2892C14.1133 10.7913 14.5183 11.1963 15.0204 11.1963C15.5226 11.1963 15.9275 10.7913 15.9275 10.2892C15.9275 10.0219 15.8141 9.77894 15.6198 9.60886V8.46689H17.2315C17.3854 8.46689 17.5149 8.58028 17.5311 8.74226L18.5516 18.4612C18.5678 18.5827 18.5111 18.6555 18.4787 18.696H18.5111Z' fill='%23999999' /%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-size: contain;
-      width: 24px;
-      height: 24px;
       display: block;
     }
     &.added{
@@ -67,27 +76,19 @@
     font-size: 0;
   }
   .tinvwl_add_to_wishlist_button{
-    @apply absolute;
-    //position: absolute;
-    //top: -33px !important;
-    //right: 0px !important;
-    width: 32px;
-    height: 32px;
+    @apply absolute h-6 w-6 xs:w-8 xs:h-8;
     margin: 0 !important;
     background: #fff !important;
     border-radius: 2px;
     &:before{
+      @apply h-3 w-3 xs:w-5 xs:h-5 top-0.5 left-1.5 xs:top-[6px] xs:left-[6px];
       content: ''!important;
       background-image: url("data:image/svg+xml,%3Csvg width='18' height='17' viewBox='0 0 18 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.333252 5.1667C0.333252 2.56417 2.52437 0.5 5.16618 0.5C6.72083 0.5 8.11309 1.21002 8.99998 2.32326C9.88681 1.21005 11.2789 0.5 12.8329 0.5C15.4765 0.5 17.6667 2.56417 17.6667 5.1667C17.6667 8.65546 15.4997 11.4879 13.4546 13.3944C12.4212 14.3578 11.3905 15.1116 10.6191 15.6245C10.2327 15.8813 9.90979 16.0788 9.68183 16.2129C9.5678 16.28 9.47742 16.3313 9.41461 16.3664C9.38321 16.3839 9.35868 16.3973 9.34154 16.4067L9.3214 16.4176L9.3156 16.4207L9.31378 16.4217C9.31354 16.4218 9.31269 16.4222 8.99998 15.8334C8.68727 16.4222 8.68706 16.4221 8.68682 16.422L8.68437 16.4207L8.67856 16.4176L8.65843 16.4067C8.64128 16.3973 8.61676 16.3839 8.58535 16.3664C8.52255 16.3313 8.43216 16.28 8.31814 16.2129C8.09017 16.0788 7.76722 15.8813 7.38088 15.6245C6.6095 15.1116 5.5788 14.3578 4.54536 13.3944C2.50022 11.4879 0.333252 8.65546 0.333252 5.1667ZM8.99998 15.8334L8.68682 16.422C8.88236 16.5258 9.11715 16.5261 9.31269 16.4222L8.99998 15.8334ZM8.99998 15.0671C9.00186 15.066 9.00375 15.0649 9.00564 15.0638C9.21518 14.9405 9.51723 14.7559 9.8809 14.5141C10.6095 14.0297 11.5788 13.3202 12.5454 12.4191C14.5003 10.5967 16.3334 8.09577 16.3334 5.1667C16.3334 3.35143 14.792 1.83334 12.8329 1.83334C11.3735 1.83334 10.1365 2.68166 9.60909 3.86703C9.50203 4.10765 9.26335 4.26269 8.99998 4.26269C8.73662 4.26269 8.49794 4.10765 8.39088 3.86703C7.86351 2.68173 6.6265 1.83334 5.16618 1.83334C3.20883 1.83334 1.6666 3.35143 1.6666 5.1667C1.6666 8.09577 3.49966 10.5967 5.45455 12.4191C6.42112 13.3202 7.39044 14.0297 8.11906 14.5141C8.48273 14.7559 8.78478 14.9405 8.99432 15.0638C8.99622 15.0649 8.9981 15.066 8.99998 15.0671Z' fill='%23999999' /%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-size: contain;
-      width: 18px;
-      height: 18px;
       display: block;
       transform: none !important;
       position: relative;
-      top: 7px;
-      left: 7px;
     }
     &.tinvwl-product-in-list{
       background: #999!important;
@@ -98,8 +99,14 @@
   }
 }
 
-h2.woocommerce-loop-product__title{
-  @apply text-sm font-medium tracking-wide text-black-10;
+li.outofstock{
+  .tinvwl_add_to_wishlist_button{
+    @apply top-0 right-0;
+  }
+}
+
+.woocommerce-loop-product__title{
+  @apply text-xs sm:text-sm font-semibold tracking-wide text-black-10;
 }
 a.woocommerce-LoopProduct-link{
   &:hover{

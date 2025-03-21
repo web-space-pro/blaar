@@ -1,10 +1,4 @@
 <?php
-//удалить оберку страници (делаем свою)
-remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
-remove_action('woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
-
-//Удаление хлебных крошек
-remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
 
 //удаление стандартных хуков из woocommerce_single_product_summary и затем вызрв их отдельно в нужном месте
 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 5);

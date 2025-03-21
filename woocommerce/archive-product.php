@@ -22,7 +22,7 @@ get_header( 'shop' );
 
 <main class="relative px-4 xs:px-6 py-8 xs:py-10">
     <section class="relative">
-        <div class="mb-2">
+        <div class="sm:mt-2">
             <?php
             /**
              * Hook: woocommerce_before_main_content.
@@ -32,11 +32,39 @@ get_header( 'shop' );
              * @hooked WC_Structured_Data::generate_website_data() - 30
              */
             do_action( 'woocommerce_before_main_content' );
-
             ?>
+
+            <?php
+            if (function_exists('woocommerce_breadcrumb')) {
+                $current_category = get_queried_object();
+
+                if ($current_category && isset($current_category->term_id)) {
+                    // Проверяем, является ли текущая категория родительской
+                    if ($current_category->parent == 0) {
+                        $child_categories = get_terms([
+                            'taxonomy'   => 'product_cat',
+                            'parent'     => $current_category->term_id,
+                            'hide_empty' => false
+                        ]);
+
+                        // Если у родительской категории есть подкатегории, не выводим хлебные крошки
+                        if (!empty($child_categories)) {
+                            $hide_breadcrumbs = true;
+                        }
+                    }
+
+                    // Если хлебные крошки не скрыты, показываем их
+                    if (empty($hide_breadcrumbs)) {
+                        woocommerce_breadcrumb();
+                    }
+                }
+            }
+            ?>
+
+
         </div>
 
-        <div class="mb-12">
+        <div class="mb-10 xl:mb-12">
             <?php
             /**
              * Hook: woocommerce_shop_loop_header.
@@ -50,17 +78,8 @@ get_header( 'shop' );
             ?>
         </div>
 
-        <div>
-            filter
-            <?php echo do_shortcode('[wpf-filters id=1]') ?>
-        </div>
 
-        <?php
-        /**
-         * Выводим категории
-         */
-        ?>
-        <div class="mb-8 mt-12">
+        <div class="mb-4 xs:mb-8 mt-8 xs:mt-12 flex gap-5 xs:gap-10 flex-col md:flex-row justify-between items-center relative flex-wrap">
             <?php
             // Получаем текущую категорию
             $current_term = get_queried_object();
@@ -110,11 +129,19 @@ get_header( 'shop' );
                 $terms = $child_terms;
             }
 
-            if (!empty($terms)): ?>
-                <div class="product-categories">
+            if (!empty($terms)): $counter = 0; ?>
+                <div class="product-categories overflow-hidden w-full">
                     <div class="flex gap-2 sm:gap-4 font-oswald items-center overflow-x-auto scrollbar-none">
                         <?php foreach ($terms as $term) :
                             $is_active = (is_product_category() && isset($current_term->term_id) && $current_term->term_id == $term->term_id) ? 'border-gray-40' : 'border-white-40';
+
+                            if($counter == 0): ?>
+                                <a href="#"
+                                   id="show-filters"
+                                   class="open-modal w-fit link uppercase  px-6 py-3 shrink-0 outline-none border bg-black-20 text-white-30 hover:border-gray-40">
+                                    Фильтры
+                                </a>
+                                <?php $counter++; endif;
                             ?>
                             <a href="<?= esc_url(get_term_link($term)) ?>"
                                data-id="<?= $term->term_id ?>"
@@ -127,17 +154,9 @@ get_header( 'shop' );
                 </div>
             <?php endif; ?>
 
-
-
-
-
-
-        </div>
-
-        <div>
             <?php
             if ( woocommerce_product_loop() ) {
-                echo '<div>';
+                echo '<div class="catalog_ordering text-right w-full flex-1">';
                 /**
                  * Hook: woocommerce_before_shop_loop.
                  *
@@ -147,6 +166,17 @@ get_header( 'shop' );
                  */
                 do_action( 'woocommerce_before_shop_loop' );
                 echo '</div>';
+            }
+            ?>
+            <div id="product-filters" class="product-filters hidden w-[75%] sm:max-w-96 sm:w-full h-screen overflow-x-auto z-50 fixed top-0 lg:absolute left-0 lg:right-0 lg:top-12 z-10 bg-white-10 px-8  lg:px-4 py-8">
+                <button id="close-filters">&times;</button>
+                <?php echo do_shortcode('[wpf-filters id=1]') ?>
+            </div>
+        </div>
+
+        <div>
+            <?php
+            if ( woocommerce_product_loop() ) {
 
                 woocommerce_product_loop_start();
 
@@ -183,29 +213,15 @@ get_header( 'shop' );
             ?>
         </div>
 
-        <div>
-            <?php
-            /**
-             * Hook: woocommerce_after_main_content.
-             *
-             * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
-             */
-            do_action( 'woocommerce_after_main_content' );
+        <?php
+        /**
+         * Hook: woocommerce_after_main_content.
+         *
+         * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
+         */
+        do_action( 'woocommerce_after_main_content' );
 
-            ?>
-        </div>
-
-        <div>
-            <?php
-            /**
-             * Hook: woocommerce_sidebar.
-             *
-             * @hooked woocommerce_get_sidebar - 10
-             */
-//            do_action( 'woocommerce_sidebar' );
-            ?>
-        </div>
-
+        ?>
     </section>
 </main>
 <?php get_footer( 'shop' ); ?>
