@@ -64,6 +64,15 @@ function blaar_custom_price_display($price_html, $product) {
     return $price_html;
 }
 
+add_filter('woocommerce_get_price_html', function ($price, $product) {
+    if ($product->is_type('variable')) {
+        $price = '<p class="price-range">' . $price . '</p>';
+    } else {
+        $price = '<p class="price">' . $price . '</p>';
+    }
+    return $price;
+}, 10, 2);
+
 //скрыть ссылку "Главная" из хлебных крошек
 function remove_home_from_breadcrumbs($defaults) {
     $defaults['home'] = '';

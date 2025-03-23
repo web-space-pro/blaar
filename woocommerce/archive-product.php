@@ -130,7 +130,7 @@ get_header( 'shop' );
             }
 
             if (!empty($terms)): $counter = 0; ?>
-                <div class="product-categories overflow-hidden w-full">
+                <div class="product-categories overflow-hidden flex-1 w-full">
                     <div class="flex gap-2 sm:gap-4 font-oswald items-center overflow-x-auto scrollbar-none">
                         <?php foreach ($terms as $term) :
                             $is_active = (is_product_category() && isset($current_term->term_id) && $current_term->term_id == $term->term_id) ? 'border-gray-40' : 'border-white-40';
@@ -156,7 +156,7 @@ get_header( 'shop' );
 
             <?php
             if ( woocommerce_product_loop() ) {
-                echo '<div class="catalog_ordering text-right w-full flex-1">';
+                echo '<div class="catalog_ordering text-right w-full lg:w-auto">';
                 /**
                  * Hook: woocommerce_before_shop_loop.
                  *
@@ -168,7 +168,7 @@ get_header( 'shop' );
                 echo '</div>';
             }
             ?>
-            <div id="product-filters" class="product-filters hidden w-[75%] sm:max-w-96 sm:w-full h-screen overflow-x-auto z-50 fixed top-0 lg:absolute left-0 lg:right-0 lg:top-12 z-10 bg-white-10 px-8  lg:px-4 py-8">
+            <div id="product-filters" class="product-filters hidden w-[75%] sm:max-w-96 lg:max-w-full lg:w-full h-screen lg:h-auto overflow-x-auto lg:overflow-hidden z-50 fixed top-0 lg:absolute left-0 lg:right-0 lg:top-12 z-10 bg-white-10 px-8  lg:px-4 py-8">
                 <button id="close-filters">&times;</button>
                 <?php echo do_shortcode('[wpf-filters id=1]') ?>
             </div>
