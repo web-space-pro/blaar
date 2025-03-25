@@ -102,8 +102,6 @@ add_filter('woocommerce_product_related_products_heading', function () {
 });
 
 
-
-
 /* -------File------*/
 require 'woocommerce-archive.php';
 require 'woocommerce-single-product.php';

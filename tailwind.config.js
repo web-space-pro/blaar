@@ -7,6 +7,7 @@ module.exports = {
       'index.php',
       'header.php',
       '404.php',
+      'archive-product.php',
       'comments.php',
       'sidebar.php',
       'footer.php',
@@ -16,12 +17,9 @@ module.exports = {
       'single.php',
       'content-parts/content.php',
 
-      'block-parts/tpl-hero.php',
-      'block-parts/tpl-find-us.php',
-      'block-parts/tpl-read-us.php',
-      'block-parts/tpl-contact-us.php',
-      'block-parts/tpl-offer.php',
-      'block-parts/tpl-projects-list.php',
+      'block-parts/tpl-slider.php',
+      'block-parts/tpl-banner.php',
+      'block-parts/tpl-promo-products.php',
 
       'woocommerce/archive-product.php',
       'woocommerce/content-product.php',
@@ -86,6 +84,7 @@ module.exports = {
           30: '#f5f5f5',
           40: '#ebedf2',
           50: '#e6e6e6',
+          60: '#F5F6F8',
         },
         gray:{
           10: '#dddddd',
@@ -100,7 +99,8 @@ module.exports = {
         black: {
           10: '#222222',
           20: '#242833',
-          30: '#525766'
+          30: '#525766',
+          40: '#10283A',
         }
       },
       boxShadow: {
@@ -109,8 +109,8 @@ module.exports = {
         'popup': '0 0 8px 1px rgba(217,217,217,0.5)',
       },
       backgroundImage: {
-        'bg-gradient': "linear-gradient(180deg, #1a1f1b 0%, #001202 100%);",
-        'bg-link': 'linear-gradient(90deg, #0ecccf 0%, #086b6d 100%)',
+        'gradient': "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, rgba(245, 245, 245, 0.75) 100%)",
+        'gradient-black': 'linear-gradient(180deg, rgba(34, 34, 34, 0) 0%, rgba(34, 34, 34, 0.75) 100%)',
       }
     },
   },

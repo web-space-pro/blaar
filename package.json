@@ -9,7 +9,9 @@
   "dependencies": {
     "autoprefixer": "^9.8.7",
     "jquery": "^3.5.1",
-    "postcss": "^7.0.38"
+    "postcss": "^7.0.38",
+    "rellax": "^1.12.1",
+    "slick-animation": "^0.3.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",

@@ -16,10 +16,25 @@
   ol {
     @apply list-decimal;
   }
-  a:not(.link){
+  a:not(link),  a:not(btn){
     @apply cursor-pointer decoration-black-10 text-black-10 inline-block font-semibold transition ease-in-out duration-500 hover:underline active:underline underline-offset-4;
     &:hover,&:focus, &:visited{
       @apply text-black-10;
+    }
+  }
+  a.btn{
+    @apply inline-block text-center no-underline rounded-[2px] text-white-30 bg-black-20 text-base font-oswald uppercase px-6 py-3 hover:bg-black-30;
+    &:hover,&:focus, &:visited{
+      @apply text-white-30 no-underline;
+    }
+    &.btn-long{
+      @apply md:min-w-52;
+    }
+    &.--white{
+      @apply bg-white-20 text-black-10 hover:bg-black-30 focus:bg-black-30 hover:text-white-20 focus:text-white-20;
+    }
+    &.--white-black{
+      @apply bg-black-20 md:bg-white-20 text-white-30 md:text-black-10 hover:bg-black-30 focus:bg-black-30 hover:text-white-20 focus:text-white-20;
     }
   }
 
@@ -75,4 +90,39 @@ body{
 
 .modal-window.active {
   @apply visible opacity-100 pointer-events-auto;
+}
+
+.bg-image-cover{
+  &::after{
+    @apply absolute left-0 bottom-0 w-full h-[30%] sm:h-[40%] pointer-events-none bg-gradient;
+    content: "";
+  }
+  &.--black{
+    &::after{
+      @apply bg-gradient-black;
+      content: "";
+    }
+  }
+}
+
+.products-list{
+  &.--custom{
+    .product-image {
+      @apply w-full h-[15rem] xs:h-[22rem]  sm:h-[16rem] lg:h-[24rem] xl:h-[26rem] bg-white-30 relative;
+    }
+    span.price{
+      .amount{
+        @apply text-sm sm:text-base xl:text-xl;
+      }
+      .regular-price .amount{
+        @apply text-xs;
+      }
+      .price-range{
+        @apply flex-col justify-end xl:flex-row-reverse flex leading-none flex-wrap xl:flex-nowrap;
+        .amount{
+          @apply text-[10px] sm:text-sm leading-none;
+        }
+      }
+    }
+  }
 }

@@ -28,10 +28,10 @@
   span.price{
     @apply text-xs sm:text-sm flex items-center flex-wrap md:flex-nowrap  gap-x-2 flex-row-reverse;
     .amount{
-      @apply text-black-10 block  font-normal text-xs sm:text-xl uppercase;
+      @apply text-black-10 block  font-normal text-sm sm:text-xl uppercase;
     }
     .regular-price .amount{
-      @apply text-gray-30 font-medium text-sm line-through inline-block;
+      @apply text-gray-30 font-medium text-xs line-through inline-block;
     }
     .discount-percent{
       @apply absolute -top-9 right-0 text-white-30 text-xs px-2 py-1 leading-tight font-medium inline-block bg-black-20 rounded-[2px];
