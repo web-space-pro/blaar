@@ -1,45 +1,54 @@
 <?php
+// Отображение атрибутов вариативного товара в корзине
+add_filter('woocommerce_get_item_data', 'blaar_display_variation_attributes_in_cart', 10, 2);
+add_filter('woocommerce_cart_item_name', 'blaar_remove_attribute_from_cart_item_name', 10, 3);
+function blaar_display_variation_attributes_in_cart($item_data, $cart_item) {
+    // Проверка, что товар вариативный
+    if (isset($cart_item['variation'])) {
+        foreach ($cart_item['variation'] as $attribute_name => $attribute_value) {
+            // Получаем метку атрибута (например, "Цвет" вместо "pa_czvet")
+            $taxonomy = str_replace('attribute_', '', $attribute_name);
+            $attribute_label = wc_attribute_label($taxonomy);
+
+            // Получаем термин для значения атрибута (например, для "синий")
+            if (taxonomy_exists($taxonomy)) {
+                // Ищем термин, соответствующий значению, добавленному в корзину
+                $terms = wc_get_product_terms($cart_item['product_id'], $taxonomy, array('fields' => 'all'));
+
+                // Ищем термин с нужным значением
+                $attribute_value_label = $attribute_value;
+
+                foreach ($terms as $term) {
+                    if ($term->slug === $attribute_value) {
+                        // Если найден термин, то заменяем значение на имя термина
+                        $attribute_value_label = $term->name;
+                        break;
+                    }
+                }
+            }
 
 
-add_filter('woocommerce_get_item_data', function ($item_data, $cart_item) {
-    return []; // Полностью убираем метаданные
-}, 10, 2);
-//function enable_cart_fragments() {
-//    if (is_cart()) {
-//        wp_enqueue_script('wc-cart-fragments');
-//    }
-//}
-//add_action('wp_enqueue_scripts', 'enable_cart_fragments');
-
-function update_cart_ajax() {
-    if (!isset($_POST['hash']) || !isset($_POST['quantity'])) {
-        wp_send_json_error(['message' => 'Invalid data']);
+            $item_data[] = array(
+                'name'  => $attribute_label,    // Название атрибута
+                'value' => $attribute_value_label,    // Локализованное значение атрибута
+            );
+        }
     }
-
-    $cart = WC()->cart;
-    $hash = sanitize_text_field($_POST['hash']);
-    $quantity = intval($_POST['quantity']);
-
-    if ($quantity <= 0) {
-        $cart->remove_cart_item($hash);
-    } else {
-        $cart->set_quantity($hash, $quantity, true);
-    }
-
-    WC()->cart->calculate_totals();
-    WC()->cart->maybe_set_cart_cookies();
-
-    ob_start();
-    wc_get_template('cart/cart.php'); // Загружаем шаблон корзины
-    $cart_html = ob_get_clean();
-
-    wp_send_json_success([
-        'cart_html'  => $cart_html,
-        'cart_count' => WC()->cart->get_cart_contents_count(),
-    ]);
+    return $item_data;
 }
-add_action('wp_ajax_update_cart_ajax', 'update_cart_ajax');
-add_action('wp_ajax_nopriv_update_cart_ajax', 'update_cart_ajax');
+function blaar_remove_attribute_from_cart_item_name($product_name, $cart_item, $cart_item_key) {
+    $product = $cart_item['data'];
+    $product_url = get_permalink($product->get_id());
+    $original_product_name = $product->get_name();
+
+    if (str_contains($original_product_name, ' - ')) {
+        // Убираем часть текста после " - "
+        $product_name = preg_replace('/ - .*/', '', $original_product_name);
+    }
+    $product_name = '<a href="' . $product_url . '">' . $product_name . '</a>';
+
+    return $product_name;
+}
 
 
 

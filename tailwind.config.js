@@ -35,11 +35,14 @@ module.exports = {
       'woocommerce/single-product/title.php',
       'woocommerce/single-product/meta.php',
 
-
+      'woocommerce/cart-checkout.php',
       'woocommerce/cart/cart.php',
+      'woocommerce/cart/cart-empty.php',
       'woocommerce/cart/mini-cart.php',
       'woocommerce/cart/cart-totals.php',
+      'woocommerce/cart/cart-item-data.php',
       'woocommerce/checkout/form-checkout.php',
+      'woocommerce/checkout/form-billing.php',
       'woocommerce/checkout/payment.php',
 
 

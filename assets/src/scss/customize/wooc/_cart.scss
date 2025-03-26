@@ -1,32 +1,141 @@
-.woocommerce-cart{
- table{
-  thead{
-   @apply hidden;
+.woocommerce-cart-form{
+ .cart_item{
+  .product-image{
+   a{
+    @apply block h-full min-h-[120px] max-h-[120px] sm:min-h-32 sm:max-h-32 rounded overflow-hidden;
+   }
+   img{
+    @apply w-full h-full object-center object-cover;
+   }
+  }
+  .product-price{
+   @apply uppercase ;
   }
  }
- .quantity .qty {
-  width: auto;
-  text-align: center;
-  border: 0;
+ a{
+  text-decoration: none;
+ }
+}
+
+.quantity-wrapper {
+ @apply gap-1 inline-flex items-center;
+ .quantity{
+  @apply inline-block text-center;
+  .input-text{
+   @apply p-0 text-xs font-medium text-center w-5 border-none appearance-none;
+  }
+ }
+ .qty-btn {
+  @apply inline-flex items-center justify-center w-6 h-6 cursor-pointer select-none bg-black-20 p-1 rounded-[2px];
+  &.qty-minus{
+   @apply bg-black-20/20;
+  }
+  &.hidden{
+   display: none!important;
+  }
+ }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+ -webkit-appearance: none;
+ margin: 0;
+}
+
+/* Убираем стрелки в Firefox */
+input[type="number"] {
+ -moz-appearance: textfield;
+ text-align: center;
+}
+
+
+.woocommerce-cart-checkout{
+ >p{display: none;}
+ .woocommerce{
+  @apply w-full md:w-1/2;
+ }
+}
+
+.woocommerce-checkout .wc-empty-cart-message, .woocommerce-checkout .return-to-shop{
+ @apply text-center hidden;
+}
+body.empty-cart{
+ .woocommerce-cart-checkout{
+  @apply flex-col gap-0 justify-center items-center h-full;
+  &::before{
+   background-color: currentColor;
+   content: "";
+   display: block;
+   height: 5em;
+   margin: 0 auto 2em;
+   mask-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzOCIgaGVpZ2h0PSIzOCIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMTkgMEM4LjUwNCAwIDAgOC41MDQgMCAxOXM4LjUwNCAxOSAxOSAxOSAxOS04LjUwNCAxOS0xOVMyOS40OTYgMCAxOSAwWm02LjEyOSAxMi44NzFhMi40NDkgMi40NDkgMCAwIDEgMi40NTIgMi40NTIgMi40NDkgMi40NDkgMCAwIDEtMi40NTIgMi40NTEgMi40NDkgMi40NDkgMCAwIDEtMi40NTItMi40NTEgMi40NDkgMi40NDkgMCAwIDEgMi40NTItMi40NTJaTTExLjY0NSAzMS4yNThjLTIuMDMgMC0zLjY3Ny0xLjYwOS0zLjY3Ny0zLjYgMC0xLjUzMyAyLjE4My00LjYyOCAzLjE4Ny01Ljk2MWEuNjEuNjEgMCAwIDEgLjk4IDBjMS4wMDQgMS4zMzMgMy4xODggNC40MjggMy4xODggNS45NiAwIDEuOTkyLTEuNjQ4IDMuNjAxLTMuNjc4IDMuNjAxWm0xLjIyNi0xMy40ODRhMi40NDkgMi40NDkgMCAwIDEtMi40NTItMi40NTEgMi40NDkgMi40NDkgMCAwIDEgMi40NTItMi40NTIgMi40NDkgMi40NDkgMCAwIDEgMi40NTIgMi40NTIgMi40NDkgMi40NDkgMCAwIDEtMi40NTIgMi40NTFabTEzLjA0IDExLjgxNEE4Ljk4OSA4Ljk4OSAwIDAgMCAxOSAyNi4zNTVjLTEuNjI0IDAtMS42MjQtMi40NTIgMC0yLjQ1MmExMS40IDExLjQgMCAwIDEgOC43ODggNC4xMjJjMS4wNTcgMS4yNTctLjg1OSAyLjc5Ni0xLjg3OCAxLjU2M1oiLz48L3N2Zz4=);
+   mask-position: center;
+   mask-repeat: no-repeat;
+   mask-size: 5em;
+   width: 5em;
+  }
+  .wc-empty-cart-message, .return-to-shop{
+   @apply block;
+  }
+  .woocommerce{
+   @apply w-full;
+  }
+ }
+}
+
+.woocommerce-checkout{
+ .shipping_address{
+  display: block!important;
+ }
+}
+.woocommerce-billing-fields__field-wrapper{
+ @apply flex flex-row flex-wrap gap-4 mb-2 sm:mb-6 xl:mb-8;
+ .form-row{
+  @apply w-full sm:w-[48%] xl:w-[31%] sm:mb-3 xl:mb-8;
+  &.shipping_method{
+   @apply leading-tight w-full sm:w-[30%] xl:w-[20%];
+  }
+  &.row-textarea{
+   @apply w-full sm:w-[66%] xl:w-[75%];
+  }
+ }
+ label{
+  display: inline-block;
   pointer-events: none;
-  @apply text-base xl:text-xl;
+  transform: translateY(24px);
+  transition: all 0.2s ease-in-out;
+  text-transform: none;
+  &.active{
+   transform: translateY(5px);
+  }
  }
- .qty-minus,
- .qty-plus {
-  @apply xl:w-10 xl:h-10;
- }
- .cart-collaterals .cart_totals{
-  @apply float-none w-full xs:w-5/6 lg:w-1/2;
-  margin: 0 0 0 auto;
+ label[for=billing_shipping_method]
+ {
+  transform: translateY(0);
  }
 }
-.woocommerce-cart-form.processing,
-.cart_totals.processing{
- opacity: 1 !important;
+
+.woocommerce-invalid{
+ input[type="text"],
+ input[type="email"],
+ input[type="url"],
+ input[type="password"],
+ input[type="search"],
+ input[type="number"],
+ input[type="tel"],
+ input[type="range"],
+ input[type="date"],
+ input[type="month"],
+ input[type="week"],
+ input[type="time"],
+ input[type="datetime"],
+ input[type="datetime-local"],
+ input[type="color"],
+ textarea {
+  @apply  border-b border-red-500;
+ }
 }
-.woocommerce-cart-form .blockUI,
-.woocommerce-cart-form .blockOverlay,
-.cart_totals .blockUI,
-.cart_totals .blockOverlay{
- display: none !important;
+.wc_payment_methods.payment_methods.methods ,h3#order_review_heading, .woocommerce-account-fields{
+ display: none!important;
 }
+

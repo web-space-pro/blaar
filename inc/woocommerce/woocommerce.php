@@ -4,6 +4,12 @@ add_action( 'after_setup_theme', 'blaar_wooc_theme_setup' );
 
 //Удаление всех стилей WooCommerce
 add_action('wp_enqueue_scripts', 'blaar_dequeue_woocommerce_styles', 99);
+add_action('wp_enqueue_scripts', function () {
+    wp_dequeue_style('woocommerce-general'); // Основные стили
+    wp_dequeue_style('woocommerce-layout');  // Стили разметки
+    wp_dequeue_style('woocommerce-smallscreen'); // Стили для мобильных устройств
+}, 99);
+
 
 //удалить оберку страници (делаем свою)
 remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
@@ -105,8 +111,9 @@ add_filter('woocommerce_product_related_products_heading', function () {
 /* -------File------*/
 require 'woocommerce-archive.php';
 require 'woocommerce-single-product.php';
-
-//require 'woocommerce-ajax.php';
+require 'woocommerce-cart.php';
+require 'woocommerce-checkout.php';
+require 'woocommerce-ajax.php';
 
 
 

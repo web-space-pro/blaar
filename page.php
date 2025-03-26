@@ -15,7 +15,7 @@
 get_header();
 ?>
 
-    <main class="min-h-[50svh] xs:min-h-svh flex-grow-1 flex flex-col">
+    <main class="min-h-[60svh] flex-grow-1 flex flex-col">
         <?php
         while ( have_posts() ) :
             the_post();
@@ -32,7 +32,7 @@ get_header();
                 }
             else:
                 ?>
-                <section>
+                <section class="relative px-4 xs:px-6 py-8 xs:py-10">
                     <?php get_template_part( 'content-parts/content', get_post_type('page') ); ?>
                 </section>
             <?php
