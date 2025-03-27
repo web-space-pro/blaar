@@ -113,7 +113,11 @@ require 'woocommerce-archive.php';
 require 'woocommerce-single-product.php';
 require 'woocommerce-cart.php';
 require 'woocommerce-checkout.php';
+require 'woocommerce-my-account.php';
 require 'woocommerce-ajax.php';
+
+
+
 
 
 

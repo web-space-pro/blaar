@@ -1,5 +1,58 @@
+.tinv-wishlist{
+  .wishlist_item{
+    @apply border border-gray-10 mb-4 sm:border-none;
+  }
+  .product-price{
+    @apply font-oswald;
+    .amount{
+      @apply text-black-10 block  font-normal text-sm sm:text-xl uppercase;
+    }
+    .regular-price .amount{
+      @apply text-gray-30 font-medium text-xs line-through inline-block;
+    }
+    .discount-percent{
+      @apply text-white-30 text-xs px-2 py-1 leading-tight font-medium inline-block bg-black-20 rounded-[2px];
+    }
+    .price-range{
+      .amount{
+        @apply text-[10px] sm:text-sm leading-none;
+      }
+    }
+  }
+}
+.woocommerce .tinv-wishlist .product-remove button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  margin: 0 auto;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  padding: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 0;
+  background-color: #f7f7f7;
+  color: #000;
+  font-size: 20px;
+  padding-left: 1px;
+  padding-top: 3px;
+  min-height: 0;
+}
+.woocommerce .tinv-wishlist tfoot .tinvwl-to-right{
+  width: 100%;
 
- form, .woocommerce form{
+}
+.woocommerce  .tinv-wishlist .product-action .button{
+  font-size: 12px;
+  padding: 6px 10px;
+}
+.woocommerce form{
   input[type="text"],
   input[type="email"],
   input[type="url"],
@@ -33,7 +86,7 @@
   }
   button.button,
   .woocommerce-Button.button,
-  button,
+  button:not(.show-password-input),
   input[type="button"],
   input[type="submit"] {
     @apply w-full cursor-pointer px-6 py-2.5 border border-black-10 bg-black-10 text-white-10 uppercase inline-block  text-base font-medium font-oswald transition ease-in-out duration-500;
@@ -41,10 +94,7 @@
   button[name="woocommerce_checkout_place_order"]{
    @apply w-auto;
   }
-  font-size: 16px;
-  line-height: 150%;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+
 
   //button:active,
   //button:focus,
@@ -91,4 +141,10 @@
       @apply hidden;
      }
    }
+}
+
+.woocommerce-form-login, .woocommerce-ResetPassword{
+  *{
+    margin-bottom: 10px;
+  }
 }

@@ -36,6 +36,9 @@
     &.--white-black{
       @apply bg-black-20 md:bg-white-20 text-white-30 md:text-black-10 hover:bg-black-30 focus:bg-black-30 hover:text-white-20 focus:text-white-20;
     }
+    &.secondary{
+      @apply bg-transparent border border-white-40 text-black-10 hover:bg-black-20 hover:text-white-30;
+    }
   }
 
   .btn-burger{

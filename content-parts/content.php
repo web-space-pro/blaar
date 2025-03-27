@@ -30,8 +30,38 @@
                         <?php the_content(); ?>
                     </div>
                 </div>
+            <?php elseif(is_account_page()): ?>
+                <?php
+                $current_user = wp_get_current_user();
+                $logout_url = wp_logout_url( home_url() );
+                ?>
+
+                <div class="w-full xl:w-8/12 m-auto">
+                    <div class="flex flex-row gap-4  items-center justify-between">
+                        <div>
+
+                            <h1 class="text-base sm:text-xl xl:text-2xl tracking-[-0.02em] font-oswald font-normal uppercase text-black-10">
+                              <?=!$current_user ? 'Добро пожаловать,':'Добро пожаловать' ?>
+                            </h1>
+                            <?php if (is_user_logged_in()): ?>
+                            <h2  class="text-xl sm:text-2xl xl:text-3xl tracking-[-0.02em] font-oswald font-normal uppercase  text-black-10">
+                                <?=$current_user->user_firstname;?>
+                            </h2>
+                            <?php endif;?>
+                        </div>
+                        <?php if (is_user_logged_in()): ?>
+                        <div>
+                            <a class="btn secondary" href="<?=esc_url( $logout_url ) ?>">Выйти из аккаунта</a>
+                        </div>
+                        <?php endif;?>
+                    </div>
+                    <div class="max-w-full mt-8 sm:mt-10">
+                        <?php the_content(); ?>
+                    </div>
+                </div>
+
             <?php else: ?>
-                <h1 class="text-2xl md:text-[1.75rem] lowercase leading-tight font-medium text-black"><?php the_title(); ?></h1>
+                <h1 class="text-4xl xl:text-6xl font-oswald font-normal uppercase tracking-wide text-black-10"><?php the_title(); ?></h1>
                 <div class="max-w-full mt-4">
                     <?php the_content(); ?>
                 </div>

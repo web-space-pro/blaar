@@ -44,6 +44,14 @@ module.exports = {
       'woocommerce/checkout/form-checkout.php',
       'woocommerce/checkout/form-billing.php',
       'woocommerce/checkout/payment.php',
+      'woocommerce/checkout/thankyou.php',
+
+       'woocommerce/order/order-details.php',
+       'woocommerce/order/order-details-item.php',
+       'woocommerce/order/order-customer.php',
+
+      'woocommerce/myaccount/dashboard.php',
+      'woocommerce/myaccount/form-edit-account.php',
 
 
 

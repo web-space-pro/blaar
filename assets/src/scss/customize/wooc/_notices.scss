@@ -1,7 +1,131 @@
-.woocommerce-notices-wrapper{
-  display: none!important;
+// Общий стиль для всех нотификаций
+.woocommerce-NoticeGroup-checkout {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  border-left: 5px solid #e53e3e; // Красный цвет для ошибок
+  background-color: lighten(#e53e3e, 45%);
+  color: #e53e3e;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  div[role="alert"] {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    ul.woocommerce-error {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+
+      li {
+        padding: 10px 0;
+        font-weight: bold;
+        border-bottom: 1px solid rgba(229, 62, 62, 0.5);
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"%3E%3Cpath fill="none" d="M0 0h24v24H0z"/%3E%3Cpath d="M12 10l2 2m0-2l-2 2m7-2c-1.46 0-2.78.5-3.88 1.32l-7.04-7.04C8.78 2.5 7.46 2 6 2 3.79 2 2 3.79 2 6s1.79 4 4 4c.84 0 1.63-.27 2.27-.73l7.04 7.04c-.47.93-.73 1.98-.73 3.01 0 2.21 1.79 4 4 4s4-1.79 4-4-1.79-4-4-4z" fill="none" stroke="%23e53e3e" stroke-width="2"/%3E%3C/svg%3E');
+  }
 }
-.woocommerce-notices-wrapper{
-  @apply hidden;
-  font-size: 0;
+.woocommerce-notices-wrapper {
+  .woocommerce-message,
+  .woocommerce-error,
+  .woocommerce-info {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border-left: 5px solid;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    &::before {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  .woocommerce-message {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border-left: 5px solid #38a169;
+    background-color: lighten(#38a169, 45%);
+    color: #38a169;
+
+    &:before {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"%3E%3Cpath fill="none" d="M0 0h24v24H0z"/%3E%3Cpath d="M9 11l3 3L22 4" stroke="%2338a169" stroke-width="2" fill="none"/%3E%3C/svg%3E');
+    }
+  }
+
+  .woocommerce-error {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border-left: 5px solid #e53e3e;
+    background-color: lighten(#e53e3e, 45%);
+    color: #e53e3e;
+
+    &:before {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"%3E%3Cpath fill="none" d="M0 0h24v24H0z"/%3E%3Cpath d="M12 10l2 2m0-2l-2 2m7-2c-1.46 0-2.78.5-3.88 1.32l-7.04-7.04C8.78 2.5 7.46 2 6 2 3.79 2 2 3.79 2 6s1.79 4 4 4c.84 0 1.63-.27 2.27-.73l7.04 7.04c-.47.93-.73 1.98-.73 3.01 0 2.21 1.79 4 4 4s4-1.79 4-4-1.79-4-4-4z" fill="none" stroke="%23e53e3e" stroke-width="2"/%3E%3C/svg%3E');
+    }
+  }
+  .woocommerce-info {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border-left: 5px solid #3182ce;
+    background-color: lighten(#3182ce, 45%);
+    color: #3182ce;
+
+    &:before {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"%3E%3Cpath fill="none" d="M0 0h24v24H0z"/%3E%3Cpath d="M12 8v8m0 0H9m3 0h3" stroke="%233182ce" stroke-width="2" fill="none"/%3E%3C/svg%3E');
+    }
+  }
 }

