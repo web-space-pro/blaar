@@ -242,7 +242,7 @@ function show_password_email_message_for_new_users( $order_id ) {
 
 
 
-remove_action('woocommerce_checkout_order_review', 'woocommerce_order_review', 10);
+//remove_action('woocommerce_checkout_order_review', 'woocommerce_order_review', 10);
 add_filter('woocommerce_order_review_heading', '__return_empty_string');
 //remove_action('woocommerce_checkout_order_review', 'woocommerce_checkout_payment', 20);
 remove_action('woocommerce_checkout_terms_and_conditions', 'wc_checkout_privacy_policy_text', 20);
@@ -309,3 +309,8 @@ function force_checkout_create_account_js() {
     <?php
     endif;
 }
+
+
+add_filter('woocommerce_add_error', function ($error) {
+    return str_replace('Платежи', 'Поле', $error);
+});

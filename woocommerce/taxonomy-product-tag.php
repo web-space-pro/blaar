@@ -1,8 +1,8 @@
 <?php
 /**
- * The Template for displaying product archives, including the main shop page which is a post type archive
+ * The Template for displaying products in a product tag. Simply includes the archive template
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/archive-product.php.
+ * This template can be overridden by copying it to yourtheme/woocommerce/taxonomy-product-tag.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -10,12 +10,14 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see https://woocommerce.com/document/template-structure/
- * @package WooCommerce\Templates
- * @version 8.6.0
+ * @see         https://woocommerce.com/document/template-structure/
+ * @package     WooCommerce\Templates
+ * @version     4.7.0
  */
 
-defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 get_header( 'shop' );
 ?>
@@ -80,79 +82,16 @@ get_header( 'shop' );
 
 
         <div class="mb-4 xs:mb-8 mt-8 xs:mt-12 flex gap-5 xs:gap-10 flex-col md:flex-row justify-between items-center relative flex-wrap">
-            <?php
-            // Получаем текущую категорию
-            $current_term = get_queried_object();
-            // Проверяем, что это объект типа WP_Term
-            if (isset($current_term->term_id)) {
-                // Это категория, работаем с её term_id
-                if (is_shop()) {
-                    // Если это главная страница магазина — показываем только главные категории
-                    $parent = 0;
-                } elseif (is_product_category()) {
-                    // Проверяем, если у категории есть родитель, то берём его
-                    if ($current_term->parent != 0) {
-                        $parent = $current_term->parent;
-                    } else {
-                        $parent = $current_term->term_id;
-                    }
-                } else {
-                    $parent = 0;
-                }
-            } else {
-                // Если это не категория - то выход
-                $parent = 0;
-            }
-
-            // Получаем дочерние категории текущей категории
-            $child_terms = get_terms(array(
-                'taxonomy'   => 'product_cat',
-                'orderby'    => 'name',
-                'order'      => 'ASC',
-                'hide_empty' => false,
-                'exclude'    => '15',
-                'parent'     => isset($current_term->term_id) ? $current_term->term_id : 0, // Проверяем родительскую категорию
-            ));
-
-            if (empty($child_terms)) {
-                // Если нет дочерних категорий, выводим все подкатегории родителя
-                $terms = get_terms(array(
-                    'taxonomy'   => 'product_cat',
-                    'orderby'    => 'name',
-                    'order'      => 'ASC',
-                    'hide_empty' => false,
-                    'parent'     => $parent, // Берем все подкатегории текущего родителя
-                    'exclude'    => '15'
-                ));
-            } else {
-                // Если дочерние категории есть, выводим их
-                $terms = $child_terms;
-            }
-
-            if (!empty($terms)): $counter = 0; ?>
                 <div class="product-categories overflow-hidden flex-1 w-full">
                     <div class="flex gap-2 sm:gap-4 font-oswald items-center overflow-x-auto scrollbar-none">
-                        <?php foreach ($terms as $term) :
-                            $is_active = (is_product_category() && isset($current_term->term_id) && $current_term->term_id == $term->term_id) ? 'border-gray-40' : 'border-white-40';
-
-                            if($counter == 0): ?>
-                                <a href="#"
-                                   id="show-filters"
-                                   class="open-modal btn w-fit uppercase  px-6 py-3 shrink-0 outline-none border bg-black-20 text-white-30 hover:border-gray-40 hover:no-underline">
-                                   Фильтры
-                                </a>
-                                <?php $counter++; endif;
-                            ?>
-                            <a href="<?= esc_url(get_term_link($term)) ?>"
-                               data-id="<?= $term->term_id ?>"
-                               data-name="<?= $term->slug ?>"
-                               class="<?= $is_active ?> w-fit link uppercase  px-6 py-3 shrink-0 outline-none border hover:border-gray-40 hover:no-underline !no-underline">
-                                <?= esc_html($term->name) ?>
-                            </a>
-                        <?php endforeach; ?>
+                        <a href="#"
+                           id="show-filters"
+                           class="open-modal btn w-fit uppercase  px-6 py-3 shrink-0 outline-none border bg-black-20 text-white-30 hover:border-gray-40 hover:no-underline">
+                            Фильтры
+                        </a>
                     </div>
                 </div>
-            <?php endif; ?>
+
 
             <?php
             if ( woocommerce_product_loop() ) {
@@ -225,3 +164,4 @@ get_header( 'shop' );
     </section>
 </main>
 <?php get_footer( 'shop' ); ?>
+

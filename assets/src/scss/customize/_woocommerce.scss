@@ -5,7 +5,7 @@
 @import "wooc/arhive";
 @import "wooc/cart";
 @import "wooc/my-account";
-//@import "wooc/checkout";
+@import "wooc/checkout";
 
 
 
@@ -31,3 +31,9 @@ span.onsale{
 
 
 
+.woocommerce form .targetvr-button_send_code{
+ width: auto!important;
+ font-size: 10px!important;
+ padding: 0px 7px!important;
+ height: 100%!important;
+}

@@ -1,3 +1,35 @@
+.woocommerce-shipping-fields,
+.woocommerce-checkout-review-order-table thead,
+.woocommerce-checkout-review-order-table tbody,
+.woocommerce-checkout-review-order-table .cart-subtotal,
+h3#order_review_heading,
+.wc_payment_methods.payment_methods{
+  @apply hidden;
+}
 .woocommerce-additional-fields {
- display: none !important;
+ //display: none !important;
+}
+.wc_payment_methods.payment_methods.methods ,h3#order_review_heading, .woocommerce-account-fields{
+  //display: none!important;
+}
+
+.woocommerce-checkout-review-order-table{
+  @apply w-full;
+}
+.woocommerce-checkout-review-order-table tfoot{
+  @apply text-left mb-3 block;
+  th{
+    @apply p-2;
+  }
+}
+.woocommerce-shipping-methods{
+  li{
+    @apply flex items-center gap-4 justify-between;
+    .open-pvz-btn{
+      @apply bg-black-20 text-white-30 hover:bg-black-40;
+    }
+    a{
+      @apply text-white-30 uppercase text-sm hover:text-white-30;
+    }
+  }
 }

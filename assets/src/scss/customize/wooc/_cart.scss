@@ -89,14 +89,14 @@ body.empty-cart{
  }
 }
 .woocommerce-billing-fields__field-wrapper{
- @apply flex flex-row flex-wrap gap-4 mb-2 sm:mb-6 xl:mb-8;
+ @apply flex flex-row flex-wrap gap-4 mb-2 sm:mb-6 xl:mb-4;
  .form-row{
   @apply w-full sm:w-[48%] xl:w-[31%] sm:mb-3 xl:mb-8;
   &.shipping_method{
-   @apply leading-tight w-full sm:w-[30%] xl:w-[20%];
+   @apply hidden leading-tight w-full sm:w-[30%] xl:w-[20%];
   }
   &.row-textarea{
-   @apply w-full sm:w-[66%] xl:w-[75%];
+   @apply w-[98%];
   }
  }
  label{
@@ -135,7 +135,5 @@ body.empty-cart{
   @apply  border-b border-red-500;
  }
 }
-.wc_payment_methods.payment_methods.methods ,h3#order_review_heading, .woocommerce-account-fields{
- display: none!important;
-}
+
 

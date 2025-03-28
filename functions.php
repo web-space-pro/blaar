@@ -20,3 +20,4 @@ require 'inc/functions-template.php';
 //require 'inc/functions-acf.php';
 
 require 'inc/woocommerce/woocommerce.php';
+
