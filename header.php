@@ -22,7 +22,7 @@
     ?>
 </head>
 
-<body <?php body_class('flex flex-col min-h-screen antialiased font-relaway font-normal !leading-tight tracking-wide text-sm xs:text-base text-black-10 selection:bg-black-10 selection:text-white-10'); ?> data-page-id="<?php the_ID(); ?>">
+<body <?php body_class('flex flex-col min-h-screen antialiased font-relaway font-normal !leading-tight tracking-tight text-sm xs:text-base text-black-10 selection:bg-black-10 selection:text-white-10'); ?> data-page-id="<?php the_ID(); ?>">
 <?php wp_body_open(); ?>
 
 <header class="max-w-full-client-width px-4 sm:px-6 top-0 sticky  z-40 w-full bg-white-20 backdrop-blur-md overflow-hidden">

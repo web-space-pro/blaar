@@ -41,6 +41,7 @@ module.exports = {
       'woocommerce/cart/mini-cart.php',
       'woocommerce/cart/cart-totals.php',
       'woocommerce/cart/cart-item-data.php',
+
       'woocommerce/checkout/form-checkout.php',
       'woocommerce/checkout/form-billing.php',
       'woocommerce/checkout/payment.php',
@@ -122,6 +123,9 @@ module.exports = {
       backgroundImage: {
         'gradient': "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, rgba(245, 245, 245, 0.75) 100%)",
         'gradient-black': 'linear-gradient(180deg, rgba(34, 34, 34, 0) 0%, rgba(34, 34, 34, 0.75) 100%)',
+      },
+      letterSpacing:{
+        'tight': '-0.02em'
       }
     },
   },

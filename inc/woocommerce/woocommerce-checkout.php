@@ -154,17 +154,17 @@ add_filter('woocommerce_checkout_fields', function ($fields) {
         'priority' => 70,
     ];
 
-    $fields['billing']['billing_comments'] = [
-        'placeholder' => 'Комментарий к заказу',
-        'type' => 'textarea',
-        'required' => false,
-        'class' => ['form-row-wide row-textarea'],
-        'priority' => 80,
-    ];
+//    $fields['billing']['billing_comments'] = [
+//        'placeholder' => 'Комментарий к заказу',
+//        'type' => 'textarea',
+//        'required' => false,
+//        'class' => ['form-row-wide row-textarea'],
+//        'priority' => 80,
+//    ];
 
-    // Комментарий к заказу
-//    $fields['order']['order_comments']['placeholder'] = 'Комментарий к заказу';
-//    $fields['order']['order_comments']['priority'] = 80;
+//     Комментарий к заказу
+    $fields['order']['order_comments']['placeholder'] = 'Комментарий к заказу';
+    $fields['order']['order_comments']['priority'] = 80;
 
     return $fields;
 });

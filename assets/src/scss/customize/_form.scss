@@ -82,7 +82,7 @@
     background-color: transparent !important;
   }
   select{
-   @apply block w-full text-black-10 text-xs border-b py-0.5;
+   @apply bg-transparent block w-full text-black-10 text-xs border-b py-0.5;
   }
   button.button,
   .woocommerce-Button.button,
@@ -144,7 +144,21 @@
 }
 
 .woocommerce-form-login, .woocommerce-ResetPassword{
+  @apply flex flex-col;
+  .targetvr-row-phone{
+    @apply order-2 mt-10;
+  }
   *{
     margin-bottom: 10px;
   }
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance:textfield;
 }

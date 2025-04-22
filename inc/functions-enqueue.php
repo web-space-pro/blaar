@@ -11,7 +11,7 @@ function blaar_theme_scripts()
 
    // wp_enqueue_script( 'api-yandex', 'https://api-maps.yandex.ru/2.1/?load=package.standard,package.geoObjects&lang=ru-RU', array(), $ver, true);
    // wp_enqueue_script( 'map-yandex', get_template_directory_uri() . '/map/yos.js', array(), $ver, true);
-   // wp_enqueue_script( 'input-mask', get_template_directory_uri() . '/assets/dist/scripts/plugins/jquery.maskedinput.min.js', array(), $ver, true);
+    wp_enqueue_script( 'input-mask', get_template_directory_uri() . '/assets/dist/js/plugins/jquery.maskedinput.min.js', array(), $ver, true);
 
 	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/dist/js/app.js', array(), $ver, true);
 

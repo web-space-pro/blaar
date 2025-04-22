@@ -89,16 +89,18 @@ remove_action('admin_print_styles', 'print_emoji_styles');
 // ------- для Gutenberg -----------------
 
 //Включает поддержку редактора стилей Gutenberg
-//    add_theme_support('editor-styles');
-//    add_editor_style('style-editor.css'); // Файл стилей для редактора
-// для стилей в админке и на сайте
-//    function blaar_enqueue_styles() {
-//        wp_enqueue_style('blaar-style', get_stylesheet_uri()); // Основной файл стилей
-//        wp_enqueue_style('blaar-editor-style', get_template_directory_uri() . '/style-editor.css'); // Файл редактора
-//    }
-//    add_action('wp_enqueue_scripts', 'blaar_enqueue_styles');
+function blaar_gutenberg_setup() {
+    add_theme_support('wp-block-styles'); // Подключает базовые стили блоков
+    add_theme_support('align-wide'); // Поддержка широких и полноразмерных блоков
+    add_theme_support('editor-styles'); // Включает стили редактора
+}
+add_action('after_setup_theme', 'blaar_gutenberg_setup');
 
-
+function blaar_gutenberg_enqueue_styles() {
+    wp_enqueue_style('theme-style', get_stylesheet_uri()); // Стиль темы
+    wp_enqueue_style('wp-block-library'); // Базовые стили Gutenberg
+}
+add_action('wp_enqueue_scripts', 'blaar_gutenberg_enqueue_styles');
 // ------- для Gutenberg --------конец---------
 
 ?>

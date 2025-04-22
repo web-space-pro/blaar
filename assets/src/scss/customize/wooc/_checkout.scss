@@ -3,7 +3,8 @@
 .woocommerce-checkout-review-order-table tbody,
 .woocommerce-checkout-review-order-table .cart-subtotal,
 h3#order_review_heading,
-.wc_payment_methods.payment_methods{
+.wc_payment_methods.payment_methods,
+.woocommerce-account-fields, .checkout-inline-error-message{
   @apply hidden;
 }
 .woocommerce-additional-fields {

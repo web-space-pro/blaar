@@ -111,5 +111,8 @@
     .group_simple{
       @apply order-3 w-full;
     }
+    .single_add_to_cart_button{
+      @apply mt-4;
+    }
   }
 }

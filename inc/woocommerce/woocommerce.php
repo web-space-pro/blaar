@@ -108,6 +108,7 @@ add_filter('woocommerce_product_related_products_heading', function () {
 });
 
 
+
 /* -------File------*/
 require 'woocommerce-archive.php';
 require 'woocommerce-single-product.php';
@@ -115,6 +116,8 @@ require 'woocommerce-cart.php';
 require 'woocommerce-checkout.php';
 require 'woocommerce-my-account.php';
 require 'woocommerce-ajax.php';
+
+
 
 
 
