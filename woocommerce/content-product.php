@@ -32,6 +32,13 @@ if ($product->is_type('variable')) {
     $default_attributes = $product->get_default_attributes();
     $variations = $product->get_children();
     $default_variation_image = '';
+
+//        echo '<pre>';
+        //print_r( $meta_data );
+//        echo '</pre>';
+
+
+
     if($default_attributes){
         foreach ($variations as $variation_id) {
             $variation = new WC_Product_Variation($variation_id);
@@ -46,7 +53,7 @@ if ($product->is_type('variable')) {
 
             if ($match) {
                 // Берем галерею из вариации
-                $gallery_images = get_post_meta($variation_id, 'woo_variation_gallery_images', true);
+                $gallery_images = get_post_meta($variation_id, 'vargal_params', true);
                 if (!empty($gallery_images) && is_array($gallery_images)) {
                     $default_variation_image = wp_get_attachment_image_url($gallery_images[0], 'woocommerce_thumbnail');
                 }
@@ -83,11 +90,11 @@ if ($product->is_type('variable')) {
          */
          do_action( 'woocommerce_before_shop_loop_item_title' );
         ?>
-        <div class="hover-img" data-product-id="<?php echo $product->get_id(); ?>">
-            <?php if (!empty($default_variation_image)) :?>
-                <img src="<?php echo esc_url($default_variation_image); ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="<?=get_bloginfo()?>">
-            <?php endif; ?>
-        </div>
+<!--        <div class="hover-img" data-product-id="--><?php //echo $product->get_id(); ?><!--">-->
+<!--            --><?php //if (!empty($default_variation_image)) :?>
+<!--                <img src="--><?php //echo esc_url($default_variation_image); ?><!--" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="--><?php //=get_bloginfo()?><!--">-->
+<!--            --><?php //endif; ?>
+<!--        </div>-->
         <?php woocommerce_template_loop_product_link_close(); ?>
     </div>
 

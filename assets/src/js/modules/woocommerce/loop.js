@@ -6,11 +6,18 @@ jQuery(document).ready(function ($) {
  */
     function updateVariationImage(variation, productWrapper) {
         let productImageWrapper = productWrapper.find('.cfvsw-original-thumbnail img');
-
-        if (variation && variation.woo_variation_gallery_images && variation.woo_variation_gallery_images.length > 0) {
-            let firstVariationImage = variation.woo_variation_gallery_images[0];
+        if (variation && variation.vargal_params && variation.vargal_params.length > 0) {
+            console.log(variation.vargal_params[0]);
+            let firstVariationImage = variation.vargal_params[0];
             productImageWrapper.attr('src', firstVariationImage);
             productImageWrapper.attr('srcset', firstVariationImage);
+        }else{
+            setTimeout(() => {
+                let imgOrig = productWrapper.find('.woocommerce-LoopProduct-link > img');
+                productImageWrapper.attr('src', imgOrig[0].currentSrc);
+                productImageWrapper.attr('srcset', imgOrig[0].currentSrc);
+            }, 200);
+
         }
     }
 

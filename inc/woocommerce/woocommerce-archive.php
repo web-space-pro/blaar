@@ -31,7 +31,7 @@ add_filter('single_product_archive_thumbnail_size', 'blaar_loop_product_thumbnai
 // используется плагин для создания доп-галереии для вариативного продукта (variation gallery images)
 add_filter('woocommerce_available_variation', function ($variation_data, $product, $variation) {
 
-    $gallery_images = get_post_meta($variation->get_id(), 'woo_variation_gallery_images', true);
+    $gallery_images = get_post_meta($variation->get_id(), 'vargal_params', true);
     $image_urls = [];
 
     if (!empty($gallery_images)) {
@@ -49,7 +49,7 @@ add_filter('woocommerce_available_variation', function ($variation_data, $produc
         }
     }
 
-    $variation_data['woo_variation_gallery_images'] = $image_urls;
+    $variation_data['vargal_params'] = $image_urls;
     return $variation_data;
 }, 10, 3);
 

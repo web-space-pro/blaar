@@ -40,6 +40,13 @@
   img{
     @apply w-full h-full object-cover object-center;
   }
+  .vargal-product-gallery-prev,
+  .vargal-product-gallery-next{
+    @apply bg-black-20/30 !text-white-20 p-1;
+    &:hover,&:focus{
+      @apply bg-black-20/100;
+    }
+  }
 }
 
 .custom-product-gallery{

@@ -131,7 +131,7 @@ function get_product_images() {
         foreach ($variations as $variation) {
             $variation_id = $variation['variation_id'];
             $image_id = get_post_thumbnail_id($variation_id);
-            $gallery_images = get_post_meta($variation_id, 'woo_variation_gallery_images', true);
+            $gallery_images = get_post_meta($variation_id, 'vargal_params', true);
 
             // Основное изображение вариации
             if ($image_id) {
@@ -163,7 +163,7 @@ function load_variation_images() {
 
     if ($variation_id) {
         $image_id = get_post_thumbnail_id($variation_id);
-        $gallery_images = get_post_meta($variation_id, 'woo_variation_gallery_images', true);
+        $gallery_images = get_post_meta($variation_id, 'vargal_params', true);
 
         if ($image_id) {
             $images[] = wp_get_attachment_url($image_id);

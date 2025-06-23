@@ -69,7 +69,7 @@ if ( post_password_required() ) {
                             foreach ($product->get_available_variations() as $variation) {
                                 $variation_id = $variation['variation_id'];
                                 $variation_image = get_post_thumbnail_id($variation_id) ? wp_get_attachment_url(get_post_thumbnail_id($variation_id)) : $default_image;
-                                $gallery_images = get_post_meta($variation_id, 'woo_variation_gallery_images', true);
+                                $gallery_images = get_post_meta($variation_id, 'vargal_params', true);
                                 $gallery_images = is_array($gallery_images) ? array_map('wp_get_attachment_url', $gallery_images) : [];
 
                                 echo 'variationImages[' . $variation_id . '] = {
@@ -128,8 +128,6 @@ if ( post_password_required() ) {
 
                         <div>
                             <?php
-                            global $product;
-
                             if ($product->is_type('variable')) {
                                 // Если товар вариативный, показать цену только если вариация не выбрана
                                 ?>
@@ -153,12 +151,21 @@ if ( post_password_required() ) {
                                 <?php
                             } else {
                                 // Если товар простой, сразу выводим цену
-                                woocommerce_template_single_price();
+                               // woocommerce_template_single_price();
                             }
                             ?>
 
                             <?php if (function_exists('woocommerce_template_single_add_to_cart')): ?>
-                               <div class="product-single_add_to_cart"><?= woocommerce_template_single_add_to_cart();?></div>
+                               <div class="product-single_add_to_cart">
+                                   <?= woocommerce_template_single_add_to_cart();?>
+                                   <?php
+                                   if ( $product && $product->get_price() === '' ) {
+                                       if (function_exists('woocommerce_template_single_meta')) {
+                                           woocommerce_template_single_meta();
+                                       }
+                                   }
+                                   ?>
+                               </div>
                             <?php endif; ?>
 
                             <?php blaar_display_product_attributes(); ?>

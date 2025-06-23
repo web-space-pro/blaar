@@ -20,6 +20,8 @@
     // Получаем ссылку на страницу списка желаемого
     $wishlist_page_url = function_exists('tinv_url_wishlist') ? tinv_url_wishlist() : '#';
     ?>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-animation@0.3.3/slick-animation.min.js"></script>
 </head>
 
 <body <?php body_class('flex flex-col min-h-screen antialiased font-relaway font-normal !leading-tight tracking-tight text-sm xs:text-base text-black-10 selection:bg-black-10 selection:text-white-10'); ?> data-page-id="<?php the_ID(); ?>">

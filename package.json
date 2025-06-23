@@ -11,7 +11,8 @@
     "jquery": "^3.5.1",
     "postcss": "^7.0.38",
     "rellax": "^1.12.1",
-    "slick-animation": "^0.3.3"
+    "slick-animation": "^0.3.3",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
