@@ -49,35 +49,72 @@ function blaar_dequeue_woocommerce_styles() {
 
 
 /* -------Global Functions------*/
-
 //Добавляем скидку рядом с ценой
-//Фильтр для изменения вывода цены
-add_filter('woocommerce_get_price_html', 'blaar_custom_price_display', 100, 2);
-function blaar_custom_price_display($price_html, $product) {
-    if ($product->is_type('variable')) {
-        return $price_html;
-    }
-    $regular_price = $product->get_regular_price();
-    $sale_price = $product->get_sale_price();
+add_filter( 'woocommerce_get_price_html', 'blaar_insert_discount_between_del_and_ins', 20, 2 );
+function blaar_insert_discount_between_del_and_ins( $price_html, $product ) {
+    if ( is_shop() || is_product_category() || is_product_tag() || is_product() ) {
 
-    if ($sale_price && $regular_price > $sale_price) {
-        $discount_percent = round((($regular_price - $sale_price) / $regular_price) * 100);
-        $price_html = "<span class='sale-price'>" . wc_price($sale_price) . "</span>
-            <span class='discount-percent'>-{$discount_percent}%</span>
-            <span class='regular-price'>" . wc_price($regular_price) . "</span>";
+        // Для вариативного товара
+        if ( $product->is_type('variable') ) {
+            $variations = $product->get_available_variations();
+            $regular_prices = [];
+            $sale_prices = [];
+
+            foreach ( $variations as $variation_data ) {
+                $variation = wc_get_product( $variation_data['variation_id'] );
+                $reg_price = (float) $variation->get_regular_price();
+                $sale_p    = (float) $variation->get_sale_price();
+
+                if ( $reg_price > 0 ) {
+                    $regular_prices[] = $reg_price;
+                    $sale_prices[] = $sale_p;
+                }
+            }
+
+            // Все цены одинаковые
+            if ( !empty($regular_prices) && count(array_unique($regular_prices)) === 1 && count(array_unique($sale_prices)) === 1 ) {
+                $regular_price = $regular_prices[0];
+                $sale_price    = $sale_prices[0];
+
+                if ( $sale_price && $regular_price > $sale_price ) {
+                    $discount_percent = round( ( ( $regular_price - $sale_price ) / $regular_price ) * 100 );
+                    $discount_html = ' <span class="price-discount">' . $discount_percent . '%</span> ';
+
+                    $price_html = '<del>' . wc_price($regular_price) . '</del> <ins>' . wc_price($sale_price) . '</ins>' . $discount_html;
+                } else {
+                    $price_html = '<ins>' . wc_price($regular_price) . '</ins>';
+                }
+
+                return $price_html;
+            } else {
+                // Если цены разные — оставить оригинальное поведение WooCommerce
+                return $price_html;
+            }
+        }
+
+        // Обычные товары
+        $regular_price = (float) $product->get_regular_price();
+        $sale_price    = (float) $product->get_sale_price();
+
+        if ( $sale_price && $regular_price > $sale_price ) {
+            $discount_percent = round( ( ( $regular_price - $sale_price ) / $regular_price ) * 100 );
+            $discount_html = ' <span class="price-discount">' . $discount_percent . '%</span> ';
+
+            // Вставка после </del>
+            $price_html = preg_replace(
+                '/<\/del>(\s*)<span class="screen-reader-text">/',
+                '</del>' . $discount_html . '<span class="screen-reader-text">',
+                $price_html
+            );
+        }
     }
 
     return $price_html;
 }
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
 
-add_filter('woocommerce_get_price_html', function ($price, $product) {
-    if ($product->is_type('variable')) {
-        $price = '<p class="price-range">' . $price . '</p>';
-    } else {
-        $price = '<p class="price">' . $price . '</p>';
-    }
-    return $price;
-}, 10, 2);
+
+
 
 //скрыть ссылку "Главная" из хлебных крошек
 function remove_home_from_breadcrumbs($defaults) {

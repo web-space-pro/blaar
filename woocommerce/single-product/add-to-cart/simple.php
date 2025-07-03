@@ -26,7 +26,17 @@ if ( ! $product->is_purchasable() ) {
 echo wc_get_stock_html( $product ); // WPCS: XSS ok.
 ?>
     <p class="<?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>"><?php echo $product->get_price_html(); ?></p>
-
+    <?php
+    if ( !$product->managing_stock() ) {
+        if ( $product->is_in_stock() ) {
+            echo '<p class="stock in-stock">В наличии</p>';
+        } elseif ( $product->is_on_backorder() ) {
+            echo '<p class="stock backorder">Доступен по предзаказу</p>';
+        } else {
+            echo '<p class="stock out-of-stock">Нет в наличии</p>';
+        }
+    }
+    ?>
 
     <div class="group_simple">
         <?php if ( $product->is_in_stock() ) : ?>

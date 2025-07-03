@@ -1,0 +1,28 @@
+.woocommerce-pagination {
+  @apply mt-8 flex justify-center;
+
+  .page-numbers {
+    @apply flex list-none space-x-2;
+
+    a,
+    span {
+      @apply px-4 py-2 text-sm rounded border border-gray-10 text-gray-10 transition duration-200;
+    }
+
+    a:hover {
+      @apply bg-black-30 text-white-10 no-underline;
+    }
+
+    .current {
+      @apply bg-black-30 text-white-10 border-black-10 cursor-default;
+    }
+
+    .prev {
+      @apply mr-2;
+    }
+
+    .next {
+      @apply ml-2;
+    }
+  }
+}

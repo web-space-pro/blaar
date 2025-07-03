@@ -44,28 +44,41 @@ jQuery(document).ready(function ($) {
 /* ******** конец кода ********/
 });
 
-//Фильтр на странице магазина
-jQuery(document).ready(function($) {
-    let filters = $('#product-filters');
-    let button = $('#show-filters');
-    let closeButton = $('#close-filters');
 
-    button.on('click', function(event) {
-        event.preventDefault();
-        filters.stop().fadeToggle(300);
-        $('body').toggleClass('ov-hidden');
-    });
+//вывод только 3-ох цветов товара (+N)
+document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(() => {
+        const productCards = document.querySelectorAll(".products-list li");
 
-    closeButton.on('click', function() {
-        filters.fadeOut(300);
-        $('body').removeClass('ov-hidden');
-    });
+        productCards.forEach(card => {
+            const swatchContainer = card.querySelector(".cfvsw-swatches-container");
+            if (!swatchContainer) return;
 
-    $(document).on('click', function(event) {
-        if (!filters.is(event.target) && filters.has(event.target).length === 0 &&
-            !button.is(event.target) && button.has(event.target).length === 0) {
-            filters.fadeOut(300);
-            $('body').removeClass('ov-hidden');
-        }
-    });
+            const swatches = swatchContainer.querySelectorAll(".cfvsw-swatches-option");
+
+            if (swatches.length <= 3) return;
+
+            // Скрыть все кроме первых 3
+            swatches.forEach((el, index) => {
+                if (index >= 3) el.style.display = "none";
+            });
+
+            // Создать блок "+N"
+            const hiddenCount = swatches.length - 3;
+            const moreBlock = document.createElement("div");
+            moreBlock.className = "cfvsw-swatches-more";
+            moreBlock.textContent = `+${hiddenCount}`;
+
+            // При клике — переход на страницу товара
+            const productLink = card.querySelector(".product-link");
+            if (productLink) {
+                moreBlock.addEventListener("click", () => {
+                    window.location.href = productLink.href;
+                });
+            }
+
+            swatchContainer.insertAdjacentElement('afterend', moreBlock);
+        });
+    }, 100); // Задержка 100 мс
+
 });

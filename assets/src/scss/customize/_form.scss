@@ -90,6 +90,12 @@
   input[type="button"],
   input[type="submit"] {
     @apply w-full cursor-pointer px-6 py-2.5 border border-black-10 bg-black-10 text-white-10 uppercase inline-block  text-base font-medium font-oswald transition ease-in-out duration-500;
+    &.disabled{
+      @apply cursor-none opacity-70 pointer-events-none;
+    }
+    &.wc-variation-selection-needed{
+      @apply cursor-pointer opacity-100 pointer-events-auto;
+    }
   }
   button[name="woocommerce_checkout_place_order"]{
    @apply w-auto;

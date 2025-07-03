@@ -97,7 +97,9 @@ if ($product->is_type('variable')) {
 <!--        </div>-->
         <?php woocommerce_template_loop_product_link_close(); ?>
     </div>
-    <div class="loop_content flex flex-col-reverse">
+
+<!--    class="loop_content flex flex-col-reverse lg:flex-row gap-x-2 sm:gap-x-4 sm:gap-y-2 items-stretch justify-between-->
+    <div class="loop_content flex flex-row gap-1">
         <?php
         woocommerce_template_loop_product_link_open();
         /**
@@ -108,7 +110,9 @@ if ($product->is_type('variable')) {
         do_action( 'woocommerce_shop_loop_item_title' );
         woocommerce_template_loop_product_link_close();
         ?>
-        <div class="relative flex gap-4  justify-between">
+
+
+        <div class="flex w-1/2 md:w-[60%] justify-between flex-col flex-wrap items-end gap-2 relative">
             <?php
             /**
              * Hook: woocommerce_after_shop_loop_item_title.

@@ -87,24 +87,6 @@ if ( post_password_required() ) {
 
             <div class="w-full xs:w-1/2 sm:w-7/12 md:w-9/12 xl:w-8/12 px-4 sm:px-auto ">
                 <div class="summary entry-summary sm:sticky sm:top-20 flex justify-between">
-
-                   <div class="hidden">
-                       <?php
-                       /**
-                        * Hook: woocommerce_single_product_summary.
-                        * удалено
-                        * @hooked woocommerce_template_single_title - 5
-                        * @hooked woocommerce_template_single_rating - 10
-                        * @hooked woocommerce_template_single_price - 10
-                        * @hooked woocommerce_template_single_excerpt - 20
-                        * @hooked woocommerce_template_single_add_to_cart - 30
-                        * @hooked woocommerce_template_single_meta - 40
-                        * @hooked woocommerce_template_single_sharing - 50
-                        * @hooked WC_Structured_Data::generate_product_data() - 60
-                        */
-                       do_action( 'woocommerce_single_product_summary' );
-                       ?>
-                   </div>
                     <div class="w-full lg:w-[63%]">
                         <?php
                         if (function_exists('woocommerce_breadcrumb')) {
@@ -126,50 +108,19 @@ if ( post_password_required() ) {
                             <?php echo do_shortcode('[ti_wishlists_addtowishlist]'); ?>
                         </div>
 
-                        <div>
-                            <?php
-                            if ($product->is_type('variable')) {
-                                // Если товар вариативный, показать цену только если вариация не выбрана
-                                ?>
-                                <div id="variation-price">
-                                    <?php woocommerce_template_single_price(); ?>
-                                </div>
-                                <script>
-                                    jQuery(function($) {
-                                        let form = $('.variations_form');
-                                        let priceContainer = $('#variation-price');
-
-                                        form.on('show_variation', function(event, variation) {
-                                            priceContainer.hide(); // Скрываем цену, если выбрана вариация
-                                        });
-
-                                        form.on('hide_variation', function() {
-                                            priceContainer.show(); // Показываем цену, если вариация не выбрана
-                                        });
-                                    });
-                                </script>
+                        <?php if (function_exists('woocommerce_template_single_add_to_cart')): ?>
+                            <div class="product-single_add_to_cart">
+                                <?= woocommerce_template_single_add_to_cart();?>
                                 <?php
-                            } else {
-                                // Если товар простой, сразу выводим цену
-                               // woocommerce_template_single_price();
-                            }
-                            ?>
-
-                            <?php if (function_exists('woocommerce_template_single_add_to_cart')): ?>
-                               <div class="product-single_add_to_cart">
-                                   <?= woocommerce_template_single_add_to_cart();?>
-                                   <?php
-                                   if ( $product && $product->get_price() === '' ) {
-                                       if (function_exists('woocommerce_template_single_meta')) {
-                                           woocommerce_template_single_meta();
-                                       }
-                                   }
-                                   ?>
-                               </div>
-                            <?php endif; ?>
-
-                            <?php blaar_display_product_attributes(); ?>
-                        </div>
+                                if ( $product && $product->get_price() === '' ) {
+                                    if (function_exists('woocommerce_template_single_meta')) {
+                                        woocommerce_template_single_meta();
+                                    }
+                                }
+                                ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php blaar_display_product_attributes(); ?>
                         <div class="text-sm mt-6 xs:mt-4 *:mb-2">
                             <?php
                             if (function_exists('the_content')) {
@@ -177,30 +128,9 @@ if ( post_password_required() ) {
                             }
                             ?>
                         </div>
-
-
-
                     </div>
                     <div class="w-1/3 hidden">
-                        <div class="bg-white-20 text-white-30 pt-24 px-6 pb-6">
-                            <?php
-                            if (function_exists('woocommerce_template_single_meta')) {
-                                woocommerce_template_single_meta();
-                            }
-                            ?>
 
-                            <?php
-                            if (function_exists('woocommerce_template_single_sharing')) {
-                                woocommerce_template_single_sharing();
-                            }
-                            ?>
-
-                            <?php
-                            if (function_exists('woocommerce_template_single_excerpt')) {
-                                woocommerce_template_single_excerpt();
-                            }
-                            ?>
-                        </div>
                     </div>
                 </div>
             </div>

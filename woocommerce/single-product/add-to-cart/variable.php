@@ -63,7 +63,46 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 		<?php do_action( 'woocommerce_after_variations_table' ); ?>
 
 		<div class="product-board md:absolute md:top-6 md:right-0 md:w-1/3 mt-6 md:mt-0 bg-white-20 text-black-10 py-6 px-6 text-base">
-			<?php
+            <?php
+            // Проверяем, что это вариативный товар
+            if ( $product->is_type('variable') ) {
+                $variations = $product->get_available_variations();
+                $regular_prices = [];
+                $sale_prices = [];
+
+                foreach ( $variations as $variation_data ) {
+                    $variation = wc_get_product( $variation_data['variation_id'] );
+                    $reg_price = (float) $variation->get_regular_price();
+                    $sale_p    = (float) $variation->get_sale_price();
+
+                    if ( $reg_price > 0 ) {
+                        $regular_prices[] = $reg_price;
+                        $sale_prices[]    = $sale_p;
+                    }
+                }
+
+                // Если у всех вариаций одинаковая цена
+                if ( !empty($regular_prices) && count(array_unique($regular_prices)) === 1 && count(array_unique($sale_prices)) === 1 ) {
+                    $regular_price = $regular_prices[0];
+                    $sale_price    = $sale_prices[0];
+
+                    echo '<div class="variation-price">';
+
+                    if ( $sale_price && $sale_price < $regular_price ) {
+                        $discount_percent = round( ( ( $regular_price - $sale_price ) / $regular_price ) * 100 );
+                        echo '<p class="price">';
+                        echo '<del>' . wc_price($regular_price) . '</del> <ins>' . wc_price($sale_price) . '</ins>';
+                        echo ' <span class="price-discount">-' . $discount_percent . '%</span>';
+                        echo '</p>';
+                    } else {
+                        echo '<p class="price"><ins>' . wc_price($regular_price) . '</ins></p>';
+                    }
+
+                    echo '</div>';
+                }
+            }
+            ?>
+            <?php
 				/**
 				 * Hook: woocommerce_before_single_variation.
 				 */
