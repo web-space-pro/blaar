@@ -12,12 +12,12 @@ remove_action('woocommerce_before_shop_loop', 'woocommerce_result_count', 20);
 // включить свотчи for related products
 add_filter('cfvsw_requires_shop_settings', function ($status) {
     global $woocommerce_loop;
-
     if (is_product() && !empty($woocommerce_loop) && isset($woocommerce_loop['name']) && $woocommerce_loop['name'] == 'related') {
         return true;
     }
     return $status;
 });
+
 //изменить размер изображения в списке товаров
 function blaar_loop_product_thumbnail_size($size) {
     return 'large'; // Или другой размер, например, 'large' или 'full'

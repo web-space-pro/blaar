@@ -2,8 +2,13 @@
 document.addEventListener("DOMContentLoaded", function () {
     let updateTimeout;
     let abortController = new AbortController();
+    let isUpdating = false;
 
-    // Обработчик клика для кнопок изменения количества товара
+    function setLoadingState(el, loading = true) {
+        if (loading) el.classList.add('loading');
+        else el.classList.remove('loading');
+    }
+
     document.body.addEventListener("click", function (event) {
         let button = event.target.closest(".qty-minus, .qty-plus");
         if (!button) return;
@@ -23,60 +28,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
         input.value = newValue;
 
-        // Отменяем предыдущий AJAX-запрос перед отправкой нового
         abortController.abort();
         abortController = new AbortController();
         clearTimeout(updateTimeout);
-        updateTimeout = setTimeout(() => updateCart(input, newValue, abortController.signal), 300);
+
+        updateTimeout = setTimeout(() => {
+            updateCart(input, newValue, abortController.signal);
+        }, 300);
     });
 
-    // Обработчик для кнопок удаления товара
     document.body.addEventListener("click", function (event) {
-        let removeButton = event.target.closest(".product-remove a"); // Находим кнопку удаления
+        let removeButton = event.target.closest(".product-remove a");
         if (!removeButton) return;
 
-        event.preventDefault();  // Предотвращаем переход по ссылке
+        event.preventDefault();
 
-
-
-        // Получаем строку товара
         let cartItemRow = removeButton.closest(".cart_item");
         if (!cartItemRow) return;
 
+        let quantityInput = cartItemRow.querySelector(".qty");
 
-
-        // Получаем ID товара из data-атрибута
-        let itemId = removeButton.getAttribute("data-product_id");
-        if (!itemId) return;
-        console.log(itemId);
-
-        //Устанавливаем новое количество (если товар удаляется, количество будет 0)
-         let quantityInput = cartItemRow.querySelector(".qty");
-
-        // Отменяем предыдущий AJAX-запрос перед отправкой нового
         abortController.abort();
         abortController = new AbortController();
 
-        // Отправляем запрос на обновление корзины с количеством 0
-        updateCart(quantityInput, 0, abortController.signal); // Устанавливаем 0, чтобы удалить товар из корзины
+        updateCart(quantityInput, 0, abortController.signal);
     });
 
     async function updateCart(input, quantity, signal) {
+        if (isUpdating) return;
+        isUpdating = true;
+
+
         let inputName = input.getAttribute("name");
         let match = inputName.match(/cart\[([a-f0-9]+)\]\[qty\]/);
         if (!match || !match[1]) {
             console.error("Не удалось получить hash товара:", inputName);
+            isUpdating = false;
             return;
         }
 
         let itemHash = match[1];
+        showCartSpinner(true);
+        setLoadingState(input, true);
 
         try {
-            let response = await fetch(ajaxurl, {
+            let response = await fetch("/wp-admin/admin-ajax.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({
-                    action: "update_cart_ajax",
+                    action: "blaar_update_cart_ajax",
                     hash: itemHash,
                     quantity: quantity
                 }),
@@ -86,46 +86,27 @@ document.addEventListener("DOMContentLoaded", function () {
             let data = await response.json();
 
             if (data.success) {
-               if(data.data.cart_count != 0){
-                   const cartTable = document.querySelector(".shop_table.cart");
-                   if (cartTable) {
-                       cartTable.innerHTML = new DOMParser()
-                           .parseFromString(data.data.cart_html, "text/html")
-                           .querySelector(".shop_table.cart").innerHTML;
-                   }
-               }
+                const row = input.closest(".cart_item");
 
-                const checkoutReviewTable = document.querySelector(".woocommerce-checkout-review-order-table");
-                if (checkoutReviewTable) {
-                    checkoutReviewTable.innerHTML = new DOMParser()
-                        .parseFromString(data.data.checkout_review_html, "text/html")
-                        .querySelector(".woocommerce-checkout-review-order-table").innerHTML;
+                if (data.data.item_removed && row) {
+                    row.remove();
+                } else {
+                    if (row && data.data.item_total_html) {
+                        row.querySelector(".product-subtotal").innerHTML = data.data.item_total_html;
+                    }
+                    input.value = quantity;
                 }
 
-                // Обновляем сумму заказов в корзине
-                const cartCollaterals = document.querySelector(".cart_totals");
-                if (cartCollaterals) {
-                    cartCollaterals.innerHTML = new DOMParser()
-                        .parseFromString(data.data.cart_collaterals_html, "text/html")
-                        .querySelector(".cart_totals").innerHTML;
-                }
+                // Обновляем частичные блоки
+                // document.querySelector(".cart_totals").innerHTML = data.data.cart_totals_html;
+                document.querySelector(".woocommerce-checkout-review-order-table").innerHTML = data.data.checkout_review_html;
+                document.querySelector("#order-total-cart").innerHTML = data.data.order_total;
 
-                // Обновляем итоговую сумму заказа
-                const orderTotalElement = document.querySelector("#order-total-cart");
-                if (orderTotalElement) {
-                    orderTotalElement.innerHTML = data.data.order_total;
-                }
+                updateCartCount(data.data.cart_count);
 
-                // Обновляем счётчик корзины
-                if (data.data.cart_count !== undefined) {
-                    updateCartCount(data.data.cart_count);
-                }
-
-                // Если количество товаров 0, выполняем перезагрузку
                 if (data.data.cart_count === 0) {
-                    window.location.reload();
+                    document.querySelector(".shop_table.cart").innerHTML = '<tr><td colspan="6">Ваша корзина пуста</td></tr>';
                 }
-
             } else {
                 console.error("Ошибка обновления корзины:", data.message);
             }
@@ -133,16 +114,28 @@ document.addEventListener("DOMContentLoaded", function () {
             if (error.name !== "AbortError") {
                 console.error("Ошибка запроса:", error);
             }
+        } finally {
+            setLoadingState(input, false);
+            showCartSpinner(false);
+            isUpdating = false;
+        }
+    }
+
+    function showCartSpinner(show = true) {
+        const spinner = document.getElementById("cart-spinner");
+        if (spinner) {
+            spinner.style.display = show ? "flex" : "none";
         }
     }
 
     function updateCartCount(count) {
-        const cartCountElement = document.getElementById("cart-total");
-        if (cartCountElement) {
-            cartCountElement.textContent = count;
-        }
+        const cartCountElements = document.querySelectorAll(".cart-total");
+        cartCountElements.forEach(el => {
+            el.textContent = count;
+        });
     }
 });
+
 
 // Пригающий Label в формах
 document.addEventListener("DOMContentLoaded", function () {
@@ -170,11 +163,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-
-
-
-
-
-
-

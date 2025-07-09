@@ -2,6 +2,8 @@
 // Отображение атрибутов вариативного товара в корзине
 add_filter('woocommerce_get_item_data', 'blaar_display_variation_attributes_in_cart', 10, 2);
 add_filter('woocommerce_cart_item_name', 'blaar_remove_attribute_from_cart_item_name', 10, 3);
+
+
 function blaar_display_variation_attributes_in_cart($item_data, $cart_item) {
     // Проверка, что товар вариативный
     if (isset($cart_item['variation'])) {
@@ -49,10 +51,6 @@ function blaar_remove_attribute_from_cart_item_name($product_name, $cart_item, $
 
     return $product_name;
 }
-
-
-
-
 
 
 

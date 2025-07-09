@@ -188,5 +188,7 @@ do_action( 'woocommerce_before_cart' ); ?>
         <span id="order-total-cart" data-title="<?php esc_attr_e( 'Total', 'woocommerce' ); ?>"><?php wc_cart_totals_subtotal_html(); ?></span>
     </div>
 </div>
-
+<div id="cart-spinner" class="cart-spinner" style="display: none">
+    <div class="spinner"></div>
+</div>
 <?php do_action( 'woocommerce_after_cart' ); ?>

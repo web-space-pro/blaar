@@ -63,7 +63,7 @@
                     <?php echo is_user_logged_in() ? 'Мой аккаунт' : 'Вход'; ?>
                 </a>
                 <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="<?php echo wc_get_cart_url(); ?>" target="_self">
-                    Корзина (<span class="align-text-bottom" id="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
+                    Корзина (<span class="align-text-bottom cart-total"> <?php echo WC()->cart->get_cart_contents_count(); ?></span>)
                 </a>
                 <?php //the_widget( 'WC_Widget_Cart', 'title=' ); ?>
                 <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="<?= esc_url($wishlist_page_url); ?>" target="_self">
@@ -148,7 +148,7 @@
                      избранное
                  </a>
                  <a class="uppercase inline-flex items-center font-semibold text-xs tracking-wide" href="<?php echo wc_get_cart_url(); ?>" target="_self">
-                     Корзина (<span class="align-text-bottom" id="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
+                     Корзина (<span class="align-text-bottom cart-total"><?php echo WC()->cart->get_cart_contents_count(); ?></span>)
                  </a>
 
              </div>

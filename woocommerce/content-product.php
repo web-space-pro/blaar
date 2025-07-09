@@ -90,14 +90,9 @@ if ($product->is_type('variable')) {
          */
          do_action( 'woocommerce_before_shop_loop_item_title' );
         ?>
-<!--        <div class="hover-img" data-product-id="--><?php //echo $product->get_id(); ?><!--">-->
-<!--            --><?php //if (!empty($default_variation_image)) :?>
-<!--                <img src="--><?php //echo esc_url($default_variation_image); ?><!--" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="--><?php //=get_bloginfo()?><!--">-->
-<!--            --><?php //endif; ?>
-<!--        </div>-->
         <?php woocommerce_template_loop_product_link_close(); ?>
     </div>
-    <div class="loop_content flex flex-col-reverse">
+    <div class="loop_content flex flex-col">
         <?php
         woocommerce_template_loop_product_link_open();
         /**

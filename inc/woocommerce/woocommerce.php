@@ -1,9 +1,24 @@
 <?php
 // Настройка WooCommerce
 add_action( 'after_setup_theme', 'blaar_wooc_theme_setup' );
+function blaar_wooc_theme_setup() {
+    // Включает поддержку WooCommerce в теме
+    add_theme_support('woocommerce');
+    // Включает поддержку изображений товаров разного размера
+    add_theme_support('wc-product-gallery-zoom'); // Зум картинок товаров
+    add_theme_support('wc-product-gallery-lightbox'); // Лайтбокс для изображений
+    add_theme_support('wc-product-gallery-slider'); // Слайдер изображений товаров
+}
 
 //Удаление всех стилей WooCommerce
-add_action('wp_enqueue_scripts', 'blaar_dequeue_woocommerce_styles', 99);
+ add_action('wp_enqueue_scripts', 'blaar_dequeue_woocommerce_styles', 99);
+function blaar_dequeue_woocommerce_styles() {
+    if (!is_cart() && !is_checkout() && !is_account_page()) {
+        wp_dequeue_style('woocommerce-general');
+        wp_dequeue_style('woocommerce-layout');
+        wp_dequeue_style('woocommerce-smallscreen');
+    }
+}
 add_action('wp_enqueue_scripts', function () {
     wp_dequeue_style('woocommerce-general'); // Основные стили
     wp_dequeue_style('woocommerce-layout');  // Стили разметки
@@ -11,42 +26,15 @@ add_action('wp_enqueue_scripts', function () {
 }, 99);
 
 
-//удалить оберку страници (делаем свою)
+
+
+
+//удалить оберку страници (будет своя)
 remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
 remove_action('woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
 
 //Удаление хлебных крошек
 remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
-
-function blaar_wooc_theme_setup() {
-
-
-    // Включает поддержку WooCommerce в теме
-    add_theme_support('woocommerce');
-
-    // Включает поддержку изображений товаров разного размера
-    add_theme_support('wc-product-gallery-zoom'); // Зум картинок товаров
-    add_theme_support('wc-product-gallery-lightbox'); // Лайтбокс для изображений
-    add_theme_support('wc-product-gallery-slider'); // Слайдер изображений товаров
-
-
-}
-
-function blaar_dequeue_woocommerce_styles() {
-//    if (class_exists('WooCommerce')) {
-//        // Удаляем все стандартные стили WooCommerce
-//        wp_dequeue_style('woocommerce-general');  // Основные стили
-//        wp_dequeue_style('woocommerce-layout');   // Стили разметки
-//        wp_dequeue_style('woocommerce-smallscreen'); // Стили для мобильных устройств
-//    }
-
-    if (!is_cart() && !is_checkout() && !is_account_page()) {
-        wp_dequeue_style('woocommerce-general');
-        wp_dequeue_style('woocommerce-layout');
-        wp_dequeue_style('woocommerce-smallscreen');
-    }
-}
-
 
 /* -------Global Functions------*/
 //Добавляем скидку рядом с ценой
@@ -117,26 +105,26 @@ remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_singl
 
 
 //скрыть ссылку "Главная" из хлебных крошек
-function remove_home_from_breadcrumbs($defaults) {
+function blaar_remove_home_from_breadcrumbs($defaults) {
     $defaults['home'] = '';
     return $defaults;
 }
-add_filter('woocommerce_breadcrumb_defaults', 'remove_home_from_breadcrumbs');
+add_filter('woocommerce_breadcrumb_defaults', 'blaar_remove_home_from_breadcrumbs');
 
-function custom_woocommerce_breadcrumb_separator($defaults) {
+function blaar_woocommerce_breadcrumb_separator($defaults) {
     $defaults['delimiter'] = ' > ';
     return $defaults;
 }
-add_filter('woocommerce_breadcrumb_defaults', 'custom_woocommerce_breadcrumb_separator');
+add_filter('woocommerce_breadcrumb_defaults', 'blaar_woocommerce_breadcrumb_separator');
 
  //Удаляет последний элемент из массива хлебных крошек
-function remove_last_breadcrumb_item($crumbs) {
+function blaar_remove_last_breadcrumb_item($crumbs) {
     if (is_product() && is_array($crumbs) && !empty($crumbs)) {
         array_pop($crumbs);
     }
     return $crumbs;
 }
-add_filter('woocommerce_get_breadcrumb', 'remove_last_breadcrumb_item');
+add_filter('woocommerce_get_breadcrumb', 'blaar_remove_last_breadcrumb_item');
 
 
 //изменить заголовок "Related Products"
