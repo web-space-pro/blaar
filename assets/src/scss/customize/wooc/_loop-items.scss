@@ -135,7 +135,7 @@
       @apply text-gray-30 font-medium text-[10px] sm:text-xs line-through inline-block;
     }
     .price-discount{
-      @apply absolute sm:-top-[65px] -top-[90px] right-0 text-white-30 text-xs px-2 py-1 leading-tight font-medium inline-block bg-black-20 rounded-[2px];
+      @apply hidden absolute sm:-top-[65px] -top-[90px] right-0 text-white-30 text-xs px-2 py-1 leading-tight font-medium inline-block bg-black-20 rounded-[2px];
     }
   }
 
